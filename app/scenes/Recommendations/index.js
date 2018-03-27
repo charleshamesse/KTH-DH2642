@@ -18,13 +18,19 @@ class Recommendations extends React.Component {
   }
 
   renderBooks() {
-    return _.map(this.props.books, book => {
-      return (
-        <div key={book.id} className="col-md-3">
-          <BookCard apiId={book.id} book={book} title={book.volumeInfo.title} thumbnail={book.volumeInfo.imageLinks.thumbnail} />
-        </div>
-      );
-    });
+    console.log(this.props)
+    if(this.props.loading) {
+      return (<div>Loading..</div>)
+    }
+    else {
+      return _.map(this.props.recommendations, book => {
+        return (
+  //        <div className="col-md-3">
+            <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} thumbnail={book.volumeInfo.imageLinks.thumbnail} />
+    //      </div>
+        );
+      });
+    }
   }
 
   render() {
@@ -37,7 +43,7 @@ class Recommendations extends React.Component {
               <p className="lead">Here's a list of books carefully picked by our team of experts.</p>
               
             </div>
-            <div className="row">
+            <div className="card-columns">
               {this.renderBooks()}
             </div>
 
@@ -52,7 +58,10 @@ class Recommendations extends React.Component {
 
 function mapStateToProps(state) {
   console.log("mstp", state)
-  return { books: state.books };
+  return { 
+    loading: state.books.loading,
+    recommendations: state.books.recommendations
+  };
 }
 
 // Anything returned from this function will end up as props

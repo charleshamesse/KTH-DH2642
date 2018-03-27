@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import ReduxPromise from 'redux-promise'
+import promiseMiddleware from 'redux-promise-middleware'
 
 import Header from './components/Header'
 import Introduction from './scenes/Introduction'
@@ -13,7 +13,7 @@ import reducers from './reducers';
 
 require('./custom.scss');
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware())(createStore);
 
 export default class App extends React.Component {
   render() {

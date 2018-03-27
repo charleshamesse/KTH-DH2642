@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { FETCH_BOOKS, RECV_BOOKS } from "../actions";
+import { FETCH_BOOKS, FULFILLED, PENDING } from "../actions";
 
 export default function (state = {}, action) {
     console.log("Action received:", action)
@@ -11,10 +11,17 @@ export default function (state = {}, action) {
       case FETCH_POST:
         return { ...state, [action.payload.data.id]: action.payload.data };
         */    
-        case FETCH_BOOKS:
-            // console.log('reducer', action.payload.data.items)
-            return _.mapKeys(action.payload.data.items, "id"); //action.payload.data
-                    
+        case FETCH_BOOKS + PENDING:
+            return {...state, loading: true}
+
+        case FETCH_BOOKS + FULFILLED:
+            // console.log('reducer', action.payload.data.items) 
+            return {
+                ...state, 
+                loading: false,
+                recommendations: _.mapKeys(action.payload.data.items, "id")
+            }
+
         default:
             return state;
     }
