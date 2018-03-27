@@ -1,33 +1,67 @@
 import React from 'react';
 
+import _ from "lodash";
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
+import { fetchBooks } from "../../actions";
 import BookCard from '../../components/BookCard'
 
-export default class Recommendations extends React.Component {
-  render() {
-     return(
-         <div>
-     <div className="album py-5 bg-light">
-            <div className="container">
-              <div className="my-3 py-3">
-                <h2 className="display-5">Today's Recommendations</h2>
-                <p className="lead">Here's a list of books carefully picked by our team of experts.</p>
-              </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <BookCard />
-                </div>
-                <div className="col-md-4">
-                  <BookCard />
-                </div>
-                <div className="col-md-4">
-                  <BookCard />
-                </div>
-    
-                </div>
-               
-                </div>
-              </div>
-            </div>
+
+class Recommendations extends React.Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    this.props.fetchBooks("Deep Learning");
+  }
+
+  renderBooks() {
+    return _.map(this.props.books, book => {
+      return (
+        <div key={book.id} className="col-md-3">
+          <BookCard apiId={book.id} book={book} title={book.volumeInfo.title} thumbnail={book.volumeInfo.imageLinks.thumbnail} />
+        </div>
       );
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="album py-5 bg-light">
+          <div className="container">
+            <div className="my-3 py-3">
+              <h2 className="display-5">Today's Recommendations</h2>
+              <p className="lead">Here's a list of books carefully picked by our team of experts.</p>
+              
+            </div>
+            <div className="row">
+              {this.renderBooks()}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
   }
 }
+
+
+
+function mapStateToProps(state) {
+  console.log("mstp", state)
+  return { books: state.books };
+}
+
+// Anything returned from this function will end up as props
+// on the BookList container
+function mapDispatchToProps(dispatch) {
+  // Whenever selectBook is called, the result shoudl be passed
+  // to all of our reducers
+  return bindActionCreators({ fetchBooks: fetchBooks }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recommendations)
+  // mapStateToProps, { fetchBooks })(Recommendations);
