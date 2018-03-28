@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import _ from "lodash";
 import { connect } from "react-redux";
@@ -7,7 +7,7 @@ import { fetchBooks } from "../../actions";
 import BookCard from '../../components/BookCard'
 
 
-class Recommendations extends React.Component {
+class Recommendations extends Component {
 
   constructor(props) {
     super(props)
