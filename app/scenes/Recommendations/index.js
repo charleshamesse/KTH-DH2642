@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import _ from "lodash";
 import { connect } from "react-redux";
@@ -7,7 +7,7 @@ import { fetchBooks } from "../../actions";
 import BookCard from '../../components/BookCard'
 
 
-class Recommendations extends React.Component {
+class Recommendations extends Component {
 
   constructor(props) {
     super(props)
@@ -23,7 +23,7 @@ class Recommendations extends React.Component {
       return (<div>Loading..</div>)
     }
     else {
-      return _.map(this.props.recommendations, book => {
+      return _.map(this.props.books, book => {
         return (
   //        <div className="col-md-3">
             <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} thumbnail={book.volumeInfo.imageLinks.thumbnail} />
@@ -58,10 +58,8 @@ class Recommendations extends React.Component {
 
 function mapStateToProps(state) {
   console.log("mstp", state)
-  return { 
-    loading: state.books.loading,
-    recommendations: state.books.recommendations
-  };
+
+  return { books: state.bookHandler.books };
 }
 
 // Anything returned from this function will end up as props

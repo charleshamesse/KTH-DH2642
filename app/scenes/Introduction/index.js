@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import booksImage from '../../assets/img/books.png'
 
-export default class Introduction extends React.Component {
+export default class Introduction extends Component {
     render() {
         return (
             <section className="jumbotron text-center">
