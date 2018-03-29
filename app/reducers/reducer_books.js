@@ -1,7 +1,13 @@
 import _ from "lodash";
 import { FETCH_BOOKS, RECV_BOOKS } from "../actions";
 
-export default function (state = {}, action) {
+const initial_state = {
+    books: [],
+    fetching: true
+};
+
+
+export default function (state=initial_state, action) {
     console.log("Action received:", action)
     
     switch (action.type) {
@@ -13,8 +19,8 @@ export default function (state = {}, action) {
         */    
         case FETCH_BOOKS:
             // console.log('reducer', action.payload.data.items)
-            return _.mapKeys(action.payload.data.items, "id"); //action.payload.data
-                    
+            console.log("!!!!action", action)
+            return {...state, fetching:false, books: _.mapKeys(action.payload.data.items, "id")};
         default:
             return state;
     }

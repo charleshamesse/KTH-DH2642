@@ -52,7 +52,8 @@ class Recommendations extends Component {
 
 function mapStateToProps(state) {
   console.log("mstp", state)
-  return { books: state.books };
+
+  return { books: state.bookHandler.books };
 }
 
 // Anything returned from this function will end up as props
