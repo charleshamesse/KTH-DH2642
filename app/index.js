@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Header from './components/Header'
 import Introduction from './scenes/Introduction'
+import Search from './scenes/Search'
 import Recommendations from './scenes/Recommendations'
 import Footer from './components/Footer'
 
@@ -18,16 +20,19 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware())(createSto
 export default class App extends React.Component {
   render() {
     return (
-      <div>
-        <Header />
+      <Router>
+        <div>
+          <Header />
 
-        <main role="main">
-          <Introduction />
-          <Recommendations />
-        </main>
+          <main role="main">
+            <Route path="/home" component={Introduction} />
+            <Route path="/search" component={Search} />
+            <Route path="/bookshelf" component={Recommendations} />
+          </main>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }

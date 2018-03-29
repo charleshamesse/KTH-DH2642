@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => (
   <header>
@@ -12,13 +13,13 @@ const Header = () => (
         <div className="navbar-nav flex-row ml-md-auto d-none d-md-flex" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+              <Link to="/home" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Search</a>
+              <Link to="/search" className="nav-link">Search</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Bookshelf</a>
+              <Link to="/bookshelf" className="nav-link">Bookshelf</Link>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
