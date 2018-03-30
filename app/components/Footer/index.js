@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => (
     <footer className="text-muted">
-        <div className="container">
+        <div className="container-fluid">
             <p className="float-right">
                 <a href="#">Back to top</a>
             </p>
