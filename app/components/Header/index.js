@@ -25,7 +25,7 @@ const Header = () => (
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 My Account
               </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a className="dropdown-item" href="#">Profile</a>
                 <a className="dropdown-item" href="#">Privacy Settings</a>
                 <a className="dropdown-item" href="#">Contact us</a>

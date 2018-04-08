@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators, compose } from 'redux'
+import { firebaseConnect } from 'react-redux-firebase'
 
 import booksImage from '../../assets/img/books.png'
 
-export default class Introduction extends Component {
+
+class Introduction extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    componentDidMount() {
+        console.log(this.props)
+        this.props.firebase.login({
+            email: 'test@test.com',
+            password: 'test123'
+        })
+    }
+
     render() {
         return (
             <section className="jumbotron text-center">
@@ -25,3 +42,33 @@ export default class Introduction extends Component {
         )
     }
 }
+
+
+
+function mapStateToProps(state) {
+    return {};
+}
+
+// Anything returned from this function will end up as props
+// on the BookList container
+function mapDispatchToProps(dispatch) {
+    // Whenever selectBook is called, the result shoudl be passed
+    // to all of our reducers
+    return bindActionCreators({}, dispatch);
+}
+
+const IntroductionWithFirebase = compose(
+    firebaseConnect((props) => {
+        return [
+
+        ]
+    }),
+    connect(
+        (state) => ({
+            //todos: state.firebase.data.todos,
+            profile: state.firebase.profile // load profile
+        })
+    )
+)(Introduction)
+
+export default connect(mapStateToProps, mapDispatchToProps)(IntroductionWithFirebase)
