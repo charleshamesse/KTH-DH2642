@@ -26,9 +26,11 @@ const Header = () => (
                 My Account
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a className="dropdown-item" href="#">Profile</a>
+                <a className="dropdown-item" href="/profile">Profile</a>
                 <a className="dropdown-item" href="#">Privacy Settings</a>
                 <a className="dropdown-item" href="#">Contact us</a>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item" href="/logout">Log out</a>
               </div>
             </li>
           </ul>

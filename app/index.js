@@ -9,8 +9,11 @@ import firebase from 'firebase'
 
 import Header from './components/Header'
 import Introduction from './scenes/Introduction'
+import Login from './scenes/Login'
+import Logout from './scenes/Logout'
 import Search from './scenes/Search'
 import Recommendations from './scenes/Recommendations'
+import Profile from './scenes/Profile'
 import Footer from './components/Footer'
 
 import reducers from './reducers';
@@ -55,7 +58,10 @@ export default class App extends React.Component {
           <main role="main">
             <Route path="/home" component={Introduction} />
             <Route path="/search" component={Search} />
+            <Route path="/login" component={Login} />
             <Route path="/bookshelf" component={Recommendations} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/logout" component={Logout} />
           </main>
 
           <Footer />
