@@ -3,41 +3,49 @@ import { connect } from "react-redux";
 import { bindActionCreators, compose } from 'redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 
+import LoadingSpinner from '../../components/LoadingSpinner'
+
 class Profile extends Component {
 
     constructor(props) {
         super(props)
     }
 
+    renderFavorites(favorites) {
+        const listItems = favorites.map((favorite) =>
+            <li key={favorite}>{favorite}</li>
+        );
+        return (
+            <ul>
+                {listItems}
+            </ul>
+        );
+    }
+
     renderContent() {
-        if(isLoaded(this.props.auth) && !isEmpty(this.props.auth)) {
-            return (
-                <div>
+        console.log(this.props)
+        if(isLoaded(this.props.auth)) {
+
+            if(isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
+                return (
+                    <div>
                     <h1>Hi, {this.props.profile.displayName}</h1>
-                    <pre>
-                        Profile info: {JSON.stringify(this.props.profile, null, 2)}
-                    </pre>
-                    <pre>
-                        auth: {JSON.stringify(this.props.auth, null, 2)}
-                    </pre>
-                </div>
-            );
+
+                    
+                    <h2>Favorites</h2>
+                        {this.renderFavorites(this.props.profile.favorites)}
+                    </div>
+                );
+            }
+            return (<LoadingSpinner />); // Auth not loaded, profile not loaded or empty
         }
-        else {
-            return (
-                <div>
-                    <h1>No, no, no</h1>
-                    <pre>
-                        auth: {JSON.stringify(this.props.auth)}
-                    </pre>
-                </div>
-            )
-        }
+        return (<LoadingSpinner />); // Auth not loaded
+        
     }
 
     render() {
         return (
-            <section className="jumbotron">
+            <section className="content">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
