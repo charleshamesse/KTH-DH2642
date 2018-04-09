@@ -57,7 +57,7 @@ class Recommendations extends Component {
 
 
 function mapStateToProps(state) {
-  console.log("mstp", state)
+  // console.log("mstp", state)
 
   return { books: state.bookHandler.books };
 }

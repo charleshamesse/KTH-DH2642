@@ -15,6 +15,9 @@ class Profile extends Component {
                 <div>
                     <h1>Hi, {this.props.profile.displayName}</h1>
                     <pre>
+                        Profile info: {JSON.stringify(this.props.profile, null, 2)}
+                    </pre>
+                    <pre>
                         auth: {JSON.stringify(this.props.auth, null, 2)}
                     </pre>
                 </div>
@@ -32,7 +35,6 @@ class Profile extends Component {
         }
     }
 
-
     render() {
         return (
             <section className="jumbotron">
@@ -48,11 +50,6 @@ class Profile extends Component {
     }
 }
 
-
-
-function mapStateToProps(state) {
-    return {};
-}
 
 // Anything returned from this function will end up as props
 // on the BookList container
@@ -73,8 +70,9 @@ const ProfileWithFirebase = compose(
             //todos: state.firebase.data.todos,
             profile: state.firebase.profile, // load profile
             auth: state.firebase.auth // load profile
-        })
+        }),
+        mapDispatchToProps
     )
 )(Profile)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileWithFirebase)
+export default ProfileWithFirebase
