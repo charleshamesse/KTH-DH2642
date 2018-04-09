@@ -67,7 +67,6 @@ const IntroductionWithFirebase = compose(
     }),
     connect(
         (state) => ({
-            //todos: state.firebase.data.todos,
             profile: state.firebase.profile // load profile
         })
     )

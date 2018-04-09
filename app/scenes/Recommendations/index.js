@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 import _ from "lodash";
 import { connect } from "react-redux";
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { fetchBooks } from "../../actions";
-import BookCard from '../../components/BookCard'
+import BookCard from '../../components/BookCard';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 
 
 class Recommendations extends Component {
@@ -18,16 +19,15 @@ class Recommendations extends Component {
   }
 
   renderBooks() {
-    console.log(this.props)
     if(this.props.loading) {
       return (<div>Loading..</div>)
     }
     else {
       return _.map(this.props.books, book => {
+        const pushSample = () => this.props.firebase.push(`users/${this.props.profile.uid}/favorites`, book.id);
         return (
-  //        <div className="col-md-3">
-            <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} thumbnail={book.volumeInfo.imageLinks.thumbnail} />
-    //      </div>
+            <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
+            thumbnail={book.volumeInfo.imageLinks.thumbnail} addToFavoritesFunc={() => pushSample()} />
         );
       });
     }
@@ -55,13 +55,6 @@ class Recommendations extends Component {
 }
 
 
-
-function mapStateToProps(state) {
-  // console.log("mstp", state)
-
-  return { books: state.bookHandler.books };
-}
-
 // Anything returned from this function will end up as props
 // on the BookList container
 function mapDispatchToProps(dispatch) {
@@ -70,5 +63,18 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchBooks: fetchBooks }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Recommendations)
-  // mapStateToProps, { fetchBooks })(Recommendations);
+const RecommendationsWithFirebase = compose(
+  firebaseConnect((props) => {
+    return [
+    ]
+  }),
+  connect(
+    (state) => ({
+      books: state.bookHandler.books,
+      profile: state.firebase.auth
+    }),
+    mapDispatchToProps
+  )
+)(Recommendations)
+
+export default RecommendationsWithFirebase
