@@ -12,14 +12,17 @@ class Profile extends Component {
     }
 
     renderFavorites(favorites) {
-        const listItems = favorites.map((favorite) =>
-            <li key={favorite}>{favorite}</li>
-        );
+        console.log(favorites)
+        let arr = Object.keys(favorites).map((k) => favorites[k])
+        let listItems = arr.map((id) => 
+            <li key={id}>{id}</li>
+        )
         return (
             <ul>
                 {listItems}
             </ul>
         );
+        
     }
 
     renderContent() {
