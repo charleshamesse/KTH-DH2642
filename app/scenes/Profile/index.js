@@ -50,10 +50,6 @@ class Profile extends Component {
 
 
 
-function mapStateToProps(state) {
-    return {};
-}
-
 // Anything returned from this function will end up as props
 // on the BookList container
 function mapDispatchToProps(dispatch) {
@@ -73,8 +69,9 @@ const ProfileWithFirebase = compose(
             //todos: state.firebase.data.todos,
             profile: state.firebase.profile, // load profile
             auth: state.firebase.auth // load profile
-        })
+        }), 
+        mapDispatchToProps
     )
 )(Profile)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileWithFirebase)
+export default ProfileWithFirebase
