@@ -22,6 +22,9 @@ export default class Introduction extends Component {
                                 <h2>Bookshelf</h2>
 
                                 [ Drag and drop area ]
+                                <div className="shelf-category">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>

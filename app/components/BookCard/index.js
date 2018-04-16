@@ -5,7 +5,7 @@ const BookCard = ({ apiId, book, title, thumbnail, addToFavoritesFunc }) => (
   <div className="card mb-4 box-shadow">
     <img className="card-img-top" src={"https://books.google.com/books/content/images/frontcover/" + apiId + "?fife=w300-h450"} alt="Card image cap" />
     <div className="card-body">
-      <h3>{title}</h3>
+      <h4>{title}</h4>
       <p className="card-text">
         Text
       </p>
