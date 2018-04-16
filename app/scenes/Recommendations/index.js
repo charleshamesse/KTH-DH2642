@@ -18,22 +18,39 @@ class Recommendations extends Component {
     this.props.fetchBooks("Deep Learning");
   }
 
-  renderBooks() {
-    if(this.props.loading) {
-      return (<div>Loading..</div>)
-    }
-    else {
-      return _.map(this.props.books, book => {
-        const pushSample = () => this.props.firebase.push(`users/${this.props.profile.uid}/favorites`, book.id);
+  addBookToFavorites(book) {
+    const id = this.props.auth.uid
+    this.props.firebase.push(`users/${id}/favorites`, book.id)
+  }
+
+  removeBookFromFavorites(book, favBooks) {
+    const index = favBooks.indexOf(book.id);
+    const id = this.props.auth.uid    
+    if (index !== -1) favBooks.splice(index, 1);
+    this.props.firebase.database().ref(`users/${id}`).set({
+      favorites: favBooks
+    });
+  }
+
+  renderBooks(favs) {
+    const favBookIds = Object.keys(favs).map((k) => favs[k])
+    return _.map(this.props.books, book => {
+      if(favBookIds.includes(book.id)){
         return (
-            <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
-            thumbnail={book.volumeInfo.imageLinks.thumbnail} addToFavoritesFunc={() => pushSample()} />
+          <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
+          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={true} addToFavoritesFunc={() => this.removeBookFromFavorites(book, favBookIds)} />
         );
-      });
-    }
+      } else {
+        return (
+          <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
+          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={false} addToFavoritesFunc={() => this.addBookToFavorites(book)} />
+        );
+      }
+    });
   }
 
   render() {
+    let favs = this.props.profile.favorites;
     return (
       <div>
         <div className="album py-5 bg-light">
@@ -44,7 +61,7 @@ class Recommendations extends Component {
               
             </div>
             <div className="card-columns">
-              {this.renderBooks()}
+              {favs ? this.renderBooks(favs) : "Loading"}
             </div>
 
           </div>
@@ -60,7 +77,7 @@ class Recommendations extends Component {
 function mapDispatchToProps(dispatch) {
   // Whenever selectBook is called, the result shoudl be passed
   // to all of our reducers
-  return bindActionCreators({ fetchBooks: fetchBooks }, dispatch);
+  return bindActionCreators({ fetchBooks }, dispatch);
 }
 
 const RecommendationsWithFirebase = compose(
@@ -71,7 +88,8 @@ const RecommendationsWithFirebase = compose(
   connect(
     (state) => ({
       books: state.bookHandler.books,
-      profile: state.firebase.auth
+      profile: state.firebase.profile,
+      auth: state.firebase.auth,
     }),
     mapDispatchToProps
   )

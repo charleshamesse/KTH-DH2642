@@ -12,7 +12,8 @@ class Profile extends Component {
     }
 
     renderFavorites(favorites) {
-        console.log(favorites)
+        // TODO if no favorites, display that
+        // TODO remove book from favorites
         let arr = Object.keys(favorites).map((k) => favorites[k])
         let listItems = arr.map((id) => 
             <li key={id}>{id}</li>
@@ -26,7 +27,6 @@ class Profile extends Component {
     }
 
     renderContent() {
-        console.log(this.props)
         if(isLoaded(this.props.auth)) {
 
             if(isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
@@ -61,12 +61,7 @@ class Profile extends Component {
     }
 }
 
-
-// Anything returned from this function will end up as props
-// on the BookList container
 function mapDispatchToProps(dispatch) {
-    // Whenever selectBook is called, the result shoudl be passed
-    // to all of our reducers
     return bindActionCreators({}, dispatch);
 }
 
@@ -78,9 +73,8 @@ const ProfileWithFirebase = compose(
     }),
     connect(
         (state) => ({
-            //todos: state.firebase.data.todos,
-            profile: state.firebase.profile, // load profile
-            auth: state.firebase.auth // load profile
+            profile: state.firebase.profile, 
+            auth: state.firebase.auth
         }),
         mapDispatchToProps
     )

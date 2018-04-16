@@ -50,6 +50,8 @@ module.exports = {
             }
         ]
     },
+    mode: "development",
+    
     devServer: {
         historyApiFallback: true,
         host: '127.0.0.1',
