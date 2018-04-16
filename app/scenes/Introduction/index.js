@@ -21,8 +21,26 @@ class Introduction extends Component {
         })
         */
     }
+    renderContent() {
+        const loggedIn = this.props.profile.displayName != undefined
+        if(this.props.profile.isLoaded) {
+            return (
+                <div className="col-md-8 text-left">
+                <h1 className="jumbotron-heading">G. Readmore</h1>
+                
+                <p className="lead text-muted">{loggedIn ? "Hey " + this.props.profile.displayName: ""}! It is my goal to make your read more. I know of almost any book in the world! Try my search</p>
+                <p>
+                    {!loggedIn ? <a href="/login" className="btn btn-primary my-2 mx-1">Sign In</a>: ""}
+                    <a href="/search" className="btn btn-secondary my-2 mx-1">Discover Books</a>
+                </p>
+            </div>
+            );
+        }
+    }
 
     render() {
+        const loaded = this.props.profile.isLoaded;
+        
         return (
             <section className="jumbotron text-center">
                 <div className="container">
@@ -30,14 +48,7 @@ class Introduction extends Component {
                         <div className="col-md-4">
                             <img src={booksImage} className="img-fluid" alt={"Books"} />
                         </div>
-                        <div className="col-md-8 text-left">
-                            <h1 className="jumbotron-heading">Waaazzaaaaaaa</h1>
-                            <p className="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-                            <p>
-                                <a href="/login" className="btn btn-primary my-2 mx-1">Sign In</a>
-                                <a href="#" className="btn btn-secondary my-2 mx-1">Discover Books</a>
-                            </p>
-                        </div>
+                        {this.renderContent()}                        
                     </div>
                 </div>
             </section>
