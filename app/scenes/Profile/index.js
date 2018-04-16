@@ -74,7 +74,7 @@ const ProfileWithFirebase = compose(
     connect(
         (state) => ({
             profile: state.firebase.profile, 
-            auth: state.firebase.auth
+            auth: state.firebase.auth,
         }),
         mapDispatchToProps
     )

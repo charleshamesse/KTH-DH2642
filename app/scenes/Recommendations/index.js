@@ -18,21 +18,25 @@ class Recommendations extends Component {
     this.props.fetchBooks("Deep Learning");
   }
 
-  addBookToFavorites(book) {
+  addBookToFavorites(book, favBooks) {
     const id = this.props.auth.uid
-    this.props.firebase.push(`users/${id}/favorites`, book.id)
+    favBooks.push(book.id);
+    this.props.firebase.database().ref(`users/${id}`).update({
+      favorites: favBooks
+    })
   }
 
   removeBookFromFavorites(book, favBooks) {
     const index = favBooks.indexOf(book.id);
     const id = this.props.auth.uid    
     if (index !== -1) favBooks.splice(index, 1);
-    this.props.firebase.database().ref(`users/${id}`).set({
+    this.props.firebase.database().ref(`users/${id}`).update({
       favorites: favBooks
     });
   }
 
-  renderBooks(favs) {
+  renderBooks() {
+    const favs = this.props.profile.favorites || []
     const favBookIds = Object.keys(favs).map((k) => favs[k])
     return _.map(this.props.books, book => {
       if(favBookIds.includes(book.id)){
@@ -43,14 +47,13 @@ class Recommendations extends Component {
       } else {
         return (
           <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
-          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={false} addToFavoritesFunc={() => this.addBookToFavorites(book)} />
+          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={false} addToFavoritesFunc={() => this.addBookToFavorites(book, favBookIds)} />
         );
       }
     });
   }
 
   render() {
-    let favs = this.props.profile.favorites;
     return (
       <div>
         <div className="album py-5 bg-light">
@@ -61,7 +64,7 @@ class Recommendations extends Component {
               
             </div>
             <div className="card-columns">
-              {favs ? this.renderBooks(favs) : "Loading"}
+              {this.props.profile ? this.renderBooks() : "Loading"}
             </div>
 
           </div>
