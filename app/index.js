@@ -55,7 +55,7 @@ export default class App extends React.Component {
         <div>
           <Header />
 
-          <main role="main">
+          <main role="main">     
             <Route path="/home" component={Introduction} />
             <Route path="/search" component={Search} />
             <Route path="/login" component={Login} />
