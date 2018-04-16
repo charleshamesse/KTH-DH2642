@@ -11,12 +11,6 @@ export default function (state=initial_state, action) {
     console.log("Action received:", action)
     
     switch (action.type) {
-        /*
-      case DELETE_POST:
-        return _.omit(state, action.payload);
-      case FETCH_POST:
-        return { ...state, [action.payload.data.id]: action.payload.data };
-        */    
         case FETCH_BOOKS + PENDING:
             return {...state, loading: true}
 

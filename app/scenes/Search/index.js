@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Recommendations from '../Recommendations'
+import BookShelfBar from '../../components/BookShelfBar';
 
 export default class Introduction extends Component {
     render() {
@@ -22,9 +23,7 @@ export default class Introduction extends Component {
                                 <h2>Bookshelf</h2>
 
                                 [ Drag and drop area ]
-                                <div className="shelf-category">
-                                    
-                                </div>
+                                <BookShelfBar />
                             </div>
                         </div>
                     </div>
