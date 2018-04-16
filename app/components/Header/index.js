@@ -5,7 +5,7 @@ const Header = () => (
   <header>
     <nav className="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/home">G. Readmore</a>
+      <Link to="/home" className="navbar-brand">G. Readmore</Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
