@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { reactReduxFirebase } from 'react-redux-firebase'
 import firebase from 'firebase'
 
@@ -55,14 +55,22 @@ export default class App extends React.Component {
         <div>
           <Header />
 
-          <main role="main">     
-            <Redirect from="*" to="/home" />          
-            <Route path="/home" component={Introduction} />
-            <Route path="/search" component={Search} />
-            <Route path="/login" component={Login} />
-            <Route path="/bookshelf" component={Recommendations} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/logout" component={Logout} />
+          <main role="main"> 
+            {/* This redirect needs to be complex to handle deep linking urls later
+                https://stackoverflow.com/a/43958016/4789016
+            */}
+            <Switch>
+              <Route exact path="/" render={() => (
+                  <Redirect to="/home"/>
+              )}/>
+              <Route path="/home" component={Introduction} />
+              <Route path="/search" component={Search} />
+              <Route path="/login" component={Login} />
+              <Route path="/bookshelf" component={Recommendations} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/logout" component={Logout} />
+              <Redirect to="/home"/>
+            </Switch>
           </main>
 
           <Footer />
