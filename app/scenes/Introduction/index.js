@@ -28,7 +28,7 @@ class Introduction extends Component {
                 <div className="col-md-8 text-left">
                 <h1 className="jumbotron-heading">G. Readmore</h1>
                 
-                <p className="lead text-muted">{loggedIn ? "Hey " + this.props.profile.displayName: ""}! It is my goal to make your read more. I know of almost any book in the world! Try my search</p>
+                <p className="lead text-muted">{loggedIn ? "Hey " + this.props.profile.displayName + "! ": ""}It is my goal to make your read more. I know of almost any book in the world! Try my search</p>
                 <p>
                     {!loggedIn ? <a href="/login" className="btn btn-primary my-2 mx-1">Sign In</a>: ""}
                     <a href="/search" className="btn btn-secondary my-2 mx-1">Discover Books</a>
