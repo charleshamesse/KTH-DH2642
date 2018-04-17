@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { reactReduxFirebase } from 'react-redux-firebase'
 import firebase from 'firebase'
 
@@ -56,6 +56,7 @@ export default class App extends React.Component {
           <Header />
 
           <main role="main">     
+            <Redirect from="*" to="/home" />          
             <Route path="/home" component={Introduction} />
             <Route path="/search" component={Search} />
             <Route path="/login" component={Login} />
