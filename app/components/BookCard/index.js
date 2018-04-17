@@ -10,7 +10,7 @@ const BookCard = ({ apiId, book, title, thumbnail, isFavorite, addToFavoritesFun
     <div className="card-header text-right">
         <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={addToFavoritesFunc} /> 
     </div>
-    <Link to={`/books/${apiId}`}>
+    <Link style={{color: 'black'}} to={`/books/${apiId}`}>
       <img className="card-img-top" src={"https://books.google.com/books/content/images/frontcover/" + apiId + "?fife=w300-h450"} alt="Card image cap" />
       <div className="card-body">
         <h4>{title}</h4>
