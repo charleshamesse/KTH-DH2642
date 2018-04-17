@@ -36,22 +36,24 @@ class Recommendations extends Component {
   }
 
   renderBooks() {
-    const favs = this.props.profile.favorites || []
-    const favBookIds = Object.keys(favs).map((k) => favs[k])
+    const favs = this.props.profile.favorites || [];
+    const favBookIds = Object.keys(favs).map((k) => favs[k]);
     return _.map(this.props.books, book => {
-      if(favBookIds.includes(book.id)){
+      let isFavorite = favBookIds.includes(book.id);
         return (
-          <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
-          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={true} addToFavoritesFunc={() => this.removeBookFromFavorites(book, favBookIds)} />
+          <BookCard key={book.id} apiId={book.id} book={book} title={book.volumeInfo.title} authors={book.volumeInfo.authors}
+                    thumbnail={book.volumeInfo.imageLinks.thumbnail} 
+                    isFavorite={isFavorite} 
+                    onClickFunc={() => console.log("clicked")}
+                    addToFavoritesFunc={isFavorite 
+                      ? () => this.removeBookFromFavorites(book, favBookIds) 
+                      : () => this.addBookToFavorites(book, favBookIds)
+                    }
+          />
         );
-      } else {
-        return (
-          <BookCard key={book.id}  apiId={book.id} book={book} title={book.volumeInfo.title} 
-          thumbnail={book.volumeInfo.imageLinks.thumbnail} isFavorite={false} addToFavoritesFunc={() => this.addBookToFavorites(book, favBookIds)} />
-        );
-      }
     });
   }
+  
 
   render() {
     return (

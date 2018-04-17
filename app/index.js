@@ -69,6 +69,7 @@ export default class App extends React.Component {
               <Route path="/bookshelf" component={Recommendations} />
               <Route path="/profile" component={Profile} />
               <Route path="/logout" component={Logout} />
+              <Route path="/books/:id" component={Profile} />
               <Redirect to="/home"/>
             </Switch>
           </main>
