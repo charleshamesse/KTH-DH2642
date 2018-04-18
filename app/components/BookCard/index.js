@@ -5,9 +5,9 @@ import * as emptyHeart from '@fortawesome/fontawesome-free-regular/faHeart'
 import { Link } from 'react-router-dom'
 
 
-const BookCard = ({ apiId, book, title, thumbnail, isFavorite, addToFavoritesFunc, authors, onClickFunc }) => (
+const BookCard = ({ apiId, book, title, thumbnail, isFavorite, addToFavoritesFunc, authors }) => (
   <div className="card mb-4 box-shadow">
-    <div className="card-header text-right">
+    <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
         <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={addToFavoritesFunc} /> 
     </div>
     <Link style={{color: 'black'}} to={`/books/${apiId}`}>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import _ from "lodash";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from 'redux'
+import { Redirect } from 'react-router-dom'
 import { fetchBooks } from "../../actions";
 import BookCard from '../../components/BookCard';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
@@ -18,6 +19,13 @@ class Recommendations extends Component {
     this.props.fetchBooks("Deep Learning");
   }
 
+  handleBookFavoriteClick(isFavorite, book, favBookIds) {
+    if(isFavorite){
+      this.removeBookFromFavorites(book, favBookIds)
+    } else {
+      this.addBookToFavorites(book, favBookIds)
+    }
+  }
   addBookToFavorites(book, favBooks) {
     const id = this.props.auth.uid
     favBooks.push(book.id);
@@ -45,10 +53,7 @@ class Recommendations extends Component {
                     thumbnail={book.volumeInfo.imageLinks.thumbnail} 
                     isFavorite={isFavorite} 
                     onClickFunc={() => console.log("clicked")}
-                    addToFavoritesFunc={isFavorite 
-                      ? () => this.removeBookFromFavorites(book, favBookIds) 
-                      : () => this.addBookToFavorites(book, favBookIds)
-                    }
+                    addToFavoritesFunc={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds) }
           />
         );
     });
