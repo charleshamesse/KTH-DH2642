@@ -20,11 +20,9 @@ class Recommendations extends Component {
   }
 
   handleBookFavoriteClick(isFavorite, book, favBookIds) {
-    if(isFavorite){
-      this.removeBookFromFavorites(book, favBookIds)
-    } else {
-      this.addBookToFavorites(book, favBookIds)
-    }
+    this.props.auth.isEmpty && window.location.replace("/login");  // user not logged in, redirect to login
+
+    isFavorite ? this.removeBookFromFavorites(book, favBookIds) : this.addBookToFavorites(book, favBookIds);
   }
   addBookToFavorites(book, favBooks) {
     const id = this.props.auth.uid
