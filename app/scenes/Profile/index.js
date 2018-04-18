@@ -1,53 +1,43 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { bindActionCreators, compose } from 'redux'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { bindActionCreators, compose } from 'redux';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
-import LoadingSpinner from '../../components/LoadingSpinner'
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 class Profile extends Component {
+  renderFavorites(favorites) {
+    // TODO if no favorites, display that
+    // TODO remove book from favorites
+    const arr = Object.keys(favorites).map(k => favorites[k]);
+    const listItems = arr.map(id => <li key={id}>{id}</li>);
+    return (<ul>{listItems}</ul>);
+  }
 
-    constructor(props) {
-        super(props)
-    }
-
-    renderFavorites(favorites) {
-        // TODO if no favorites, display that
-        // TODO remove book from favorites
-        let arr = Object.keys(favorites).map((k) => favorites[k])
-        let listItems = arr.map((id) => 
-            <li key={id}>{id}</li>
-        )
+  renderContent() {
+    if (isLoaded(this.props.auth)) {
+      if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
         return (
-            <ul>
-                {listItems}
-            </ul>
+                <div>
+                <h1>Hi, {this.props.profile.displayName}</h1>
+                <h2>Favorites</h2>
+                    {this.renderFavorites(this.props.profile.favorites)}
+                </div>
         );
-        
+      } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
+        return ( // user is logged in
+          <div>
+              <Redirect to="/home"/>
+          </div>
+        );
+      }
     }
+    return (<LoadingSpinner />); // Auth not loaded
+  }
 
-    renderContent() {
-        if(isLoaded(this.props.auth)) {
-
-            if(isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
-                return (
-                    <div>
-                    <h1>Hi, {this.props.profile.displayName}</h1>
-
-                    
-                    <h2>Favorites</h2>
-                        {this.renderFavorites(this.props.profile.favorites)}
-                    </div>
-                );
-            }
-            return (<LoadingSpinner />); // Auth not loaded, profile not loaded or empty
-        }
-        return (<LoadingSpinner />); // Auth not loaded
-        
-    }
-
-    render() {
-        return (
+  render() {
+    return (
             <section className="content">
                 <div className="container">
                     <div className="row">
@@ -57,27 +47,23 @@ class Profile extends Component {
                     </div>
                 </div>
             </section>
-        )
-    }
+    );
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({}, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 const ProfileWithFirebase = compose(
-    firebaseConnect((props) => {
-        return [
-
-        ]
+  firebaseConnect(),
+  connect(
+    state => ({
+      profile: state.firebase.profile,
+      auth: state.firebase.auth,
     }),
-    connect(
-        (state) => ({
-            profile: state.firebase.profile, 
-            auth: state.firebase.auth,
-        }),
-        mapDispatchToProps
-    )
-)(Profile)
+    mapDispatchToProps,
+  ),
+)(Profile);
 
-export default ProfileWithFirebase
+export default ProfileWithFirebase;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => (
   <header>
@@ -27,8 +27,6 @@ const Header = () => (
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a className="dropdown-item" href="/profile">Profile</a>
-                {/* <a className="dropdown-item" href="#">Privacy Settings</a> */}
-                {/* <a className="dropdown-item" href="#">Contact us</a> */}
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="/logout">Log out</a>
               </div>
@@ -37,10 +35,9 @@ const Header = () => (
         </div>
 
 
-
       </div>
     </nav>
   </header>
-)
+);
 
 export default Header;
