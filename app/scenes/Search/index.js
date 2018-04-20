@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Recommendations from '../Recommendations';
+import BookShelfBar from '../../components/BookShelfBar';
 
 export default class Introduction extends Component {
   render() {
@@ -12,14 +13,16 @@ export default class Introduction extends Component {
             <p>
               <input className="form-control" />
             </p>
+
             <Recommendations />
           </div>
+
           <div className="col-12 col-md-3 col-xl-2">
             <div className="sticky-top">
               <div className="spacer"></div>
-                <h2>Bookshelf</h2>
-                  [ Drag and drop area ]
-                <div className="shelf-category"></div>
+              <h2>Bookshelf</h2>
+                [ Drag and drop area ]
+                <BookShelfBar />
             </div>
           </div>
         </div>

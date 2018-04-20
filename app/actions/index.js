@@ -6,6 +6,7 @@ const ROOT_URL = `https://www.googleapis.com/books/v1/volumes?key=${API_KEY}`;
 
 // Action names
 export const FETCH_BOOKS = 'FETCH_BOOKS';
+export const MOVE_BOOKCARD = 'MOVE_BOOKCARD';
 
 // Since we're using the middleware redux-promise-middleware
 // Promise actions dispatch pending actions and then fulfilled actions.
@@ -22,3 +23,9 @@ export function fetchBooks(queryString) {
     payload: request,
   };
 }
+
+export const setBookCardPosition = (dragIndex, hoverIndex) => ({
+  type: MOVE_BOOKCARD,
+  payload: { dragIndex, hoverIndex },
+});
+
