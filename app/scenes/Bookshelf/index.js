@@ -21,16 +21,16 @@ class Bookshelf extends Component {
     if (isLoaded(this.props.auth)) {
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
         return (
-                <div>
-                <h1>Hi, {this.props.profile.displayName}</h1>
-                <h2>BookShelf</h2>
-                    {this.renderFavorites(this.props.profile.favorites)}
-                </div>
+          <div>
+            <h1>Hi, {this.props.profile.displayName}</h1>
+            <h2>BookShelf</h2>
+            {this.renderFavorites(this.props.profile.favorites)}
+          </div>
         );
       } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
         return ( // user is logged in
           <div>
-              <Redirect to="/home"/>
+            <Redirect to="/home" />
           </div>
         );
       }
@@ -40,15 +40,20 @@ class Bookshelf extends Component {
 
   render() {
     return (
-            <section className="content">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <BookShelfBar books={this.props.profile.favorites} />
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <section className="content">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h2>Bookshelf</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <BookShelfBar books={this.props.profile.favorites} />
+            </div>
+          </div>
+        </div>
+      </section>
     );
   }
 }

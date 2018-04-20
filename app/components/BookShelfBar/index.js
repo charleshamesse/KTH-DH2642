@@ -38,7 +38,7 @@ class BookShelfBar extends Component {
 
 function mapStateToProps(state) {
   return {
-    examples: state.BookShelfBar.books,
+    examples: state.bookShelfBar.books,
   };
 }
 

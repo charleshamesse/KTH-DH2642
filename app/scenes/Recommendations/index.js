@@ -9,7 +9,7 @@ import BookCard from '../../components/BookCard';
 
 class Recommendations extends Component {
   componentDidMount() {
-    this.props.fetchBooks('Deep Learning');
+    this.props.fetchBooks('trendy');
   }
 
   renderBooks() {
@@ -30,7 +30,7 @@ class Recommendations extends Component {
   render() {
     return (
       <div>
-        <div className="album py-5 bg-light">
+        <div className="album py-5">
           <div className="container">
             <div className="my-3 py-3">
               <h2 className="display-5">{'Today\'s Recommendations'}</h2>

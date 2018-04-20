@@ -20,13 +20,19 @@ const removeBookFromFavorites = (book, favBooks, firebase, auth) => {
   });
 };
 
-
 const handleBookFavoriteClick = (isFavorite, book, favBookIds, firebase, auth) => {
   auth.isEmpty && window.location.replace('/login'); // user not logged in, redirect to login
 
   isFavorite ?
     removeBookFromFavorites(book, favBookIds, firebase, auth)
     : addBookToFavorites(book, favBookIds, firebase, auth);
+};
+
+const getAuthors = (authors) => {
+  if (authors) {
+    return authors.join(', ');
+  }
+  return '';
 };
 
 const BookCard = ({
@@ -40,7 +46,7 @@ const BookCard = ({
       <img className="card-img-top" src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
       <div className="card-body">
         <h4>{title}</h4>
-        <p className="card-text"><small className="text-muted">{authors.join(', ')}</small></p>
+        <p className="card-text"><small className="text-muted">{getAuthors(authors)}</small></p>
       </div>
     </Link>
   </div>
