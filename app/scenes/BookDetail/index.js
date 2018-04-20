@@ -34,7 +34,6 @@ class BookDetail extends Component {
   }
 }
 
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchBooks }, dispatch);
 }

@@ -67,7 +67,6 @@ export default class App extends React.Component {
               )}/> */}
               <Route exact path="/home" component={Introduction} />
               <Route path="/books/:id" component={BookDetail} />
-
               <Route path="/search" component={Search} />
               <Route path="/login" component={Login} />
               <Route path="/bookshelf" component={Bookshelf} />

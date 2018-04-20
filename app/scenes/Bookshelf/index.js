@@ -5,6 +5,7 @@ import { bindActionCreators, compose } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import LoadingSpinner from '../../components/LoadingSpinner';
+import BookShelfBar from '../../components/BookShelfBar';
 
 class Bookshelf extends Component {
   renderFavorites(favorites) {
@@ -43,7 +44,7 @@ class Bookshelf extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            {this.renderContent()}
+                            <BookShelfBar />
                         </div>
                     </div>
                 </div>
