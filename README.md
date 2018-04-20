@@ -37,7 +37,7 @@ These are the things we will definitely do before the final submission
 - Implement the user profile screen
 - Allow for advanced search queries
 - Display more than 10 search results via pagination most likely
-- Iteratively refactor and do architecture reviews (mostly making sure all of our app's state is consistent, e.g. right now the search has been quickly implemented partly using the component's state, this will be refactored)
+- Iteratively refactor and do architecture reviews (mostly making sure all of our app's state is consistent, e.g. right now the search has been quickly implemented partly using the component's state, that leads to bugs and will be corrected)
 
 If time allows we want to implement the following:
 - Allow users to comment on books
