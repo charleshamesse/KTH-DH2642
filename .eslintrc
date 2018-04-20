@@ -1,12 +1,15 @@
 {
-  parser: "babel-eslint",
+  "parser": "babel-eslint",
   "rules": {
     "no-unused-expressions": 0,
     "react/prop-types": 0,
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "class-methods-use-this": 0,
+    "react/no-find-dom-node": 0,
+    "no-param-reassign": 0
   },
   "env": {
-    "browser": true,
+    "browser": true
   },
   "extends": [
     "eslint:recommended",

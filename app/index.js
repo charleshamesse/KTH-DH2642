@@ -14,6 +14,7 @@ import Login from './scenes/Login';
 import Logout from './scenes/Logout';
 import Search from './scenes/Search';
 import Recommendations from './scenes/Recommendations';
+import Bookshelf from './scenes/Bookshelf';
 import Profile from './scenes/Profile';
 import BookDetail from './scenes/BookDetail';
 
@@ -66,9 +67,10 @@ export default class App extends React.Component {
               )}/> */}
               <Route exact path="/home" component={Introduction} />
               <Route path="/books/:id" component={BookDetail} />
+
               <Route path="/search" component={Search} />
               <Route path="/login" component={Login} />
-              <Route path="/bookshelf" component={Recommendations} />
+              <Route path="/bookshelf" component={Bookshelf} />
               <Route path="/profile" component={Profile} />
               <Route path="/logout" component={Logout} />
               <Redirect to="/home"/>
@@ -87,3 +89,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app'),
 );
+
