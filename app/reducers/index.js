@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   bookShelfBar: BookShelfBarReducer,
   bookDetail: BookDetailReducer,
   firebase: firebaseReducer,
-  // firestore: firestoreReducer // <- needed if using firestore
+  // firestore: firestoreReducer // needed if using firestore
 });
 
 export default rootReducer;

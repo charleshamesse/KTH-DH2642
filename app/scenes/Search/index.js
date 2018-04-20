@@ -13,8 +13,7 @@ class Search extends Component {
     super(props);
 
     // TODO:
-    // Manage state properly with redux
-    // Add loaders and manage errors
+    // Manage state properly with redux (problems when switching pages)
     this.state = {
       searchQuery: '',
     };
