@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Footer = () => (
-    <footer className="text-muted">
+    <footer className="text-muted bg-light">
         <div className="container-fluid">
             <p className="float-right">
                 <a href="#">Back to top</a>
             </p>
-            <p>Insert footer text here.</p>
+            <p>Copyright © 2018 G. Readmore. All rights reserved.</p>
         </div>
     </footer>
 );

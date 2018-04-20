@@ -17,17 +17,19 @@ class BookShelfBar extends Component {
   }
 
   render() {
-    const { books } = this.props;
+    const { examples, books } = this.props;
     return (
-      <div className="">
-        {books.map((card, i) => (
-          <BookShelfCard
-            key={card.id}
-            index={i}
-            id={card.id}
-            text={card.text}
-            moveCard={this.moveCard}
-          />
+      <div className="row">
+        { // div>{JSON.stringify(this.props.books)}</div>
+        }
+        {examples.map((card, i) => (
+            <BookShelfCard
+              key={card.id}
+              index={i}
+              id={card.id}
+              text={card.text}
+              moveCard={this.moveCard}
+            />
         ))}
       </div>
     );
@@ -36,7 +38,7 @@ class BookShelfBar extends Component {
 
 function mapStateToProps(state) {
   return {
-    books: state.BookShelfBar.books,
+    examples: state.BookShelfBar.books,
   };
 }
 

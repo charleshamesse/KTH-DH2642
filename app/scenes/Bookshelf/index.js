@@ -44,7 +44,7 @@ class Bookshelf extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <BookShelfBar />
+                            <BookShelfBar books={this.props.profile.favorites} />
                         </div>
                     </div>
                 </div>
