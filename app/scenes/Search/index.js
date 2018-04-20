@@ -6,6 +6,7 @@ import { bindActionCreators, compose } from 'redux';
 import { debounce } from 'throttle-debounce';
 import { fetchBooks } from '../../actions';
 import BookCard from '../../components/BookCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 class Search extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchBooks('Deep Learning');
     this.search = debounce(500, this.search);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -52,20 +52,33 @@ class Search extends Component {
   }
 
   renderContent() {
+    if (this.props.loading) {
+      return (<LoadingSpinner />);
+    }
+    if (this.state.searchQuery) {
+      if (Object.keys(this.props.books).length > 0) {
+        return (
+          <div className="album py-5">
+            <div className="container">
+              <div className="my-3 py-3">
+                <h2 className="display-5">Results</h2>
+                <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
+
+              </div>
+              <div className="card-columns">
+                {this.props.profile ? this.renderBooks() : 'Loading'}
+              </div>
+
+            </div>
+          </div>
+        );
+      }
+      return (
+        <LoadingSpinner />
+      );
+    }
     return (
-      <div className="album py-5">
-        <div className="container">
-          <div className="my-3 py-3">
-            <h2 className="display-5">Results</h2>
-            <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
-
-          </div>
-          <div className="card-columns">
-            {this.props.profile ? this.renderBooks() : 'Loading'}
-          </div>
-
-        </div>
-      </div>
+      <p>On your mark..</p>
     );
   }
 
@@ -82,7 +95,7 @@ class Search extends Component {
           </div>
         </div>
         <div className="row flex-xl-nowrap">
-          <div className="col-12 py-md-3 pl-md-5 bd-content ">
+          <div className="col-12 py-md-3 pl-md-5 bd-content">
             {this.renderContent()}
           </div>
         </div>
@@ -104,6 +117,7 @@ const SearchWithFirebase = compose(
   connect(
     state => ({
       books: state.bookHandler.books,
+      loading: state.bookHandler.loading,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
     }),
