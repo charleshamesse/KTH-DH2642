@@ -15,6 +15,7 @@ class Profile extends Component {
     return (<ul>{listItems}</ul>);
   }
 
+
   renderContent() {
     if (isLoaded(this.props.auth)) {
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {

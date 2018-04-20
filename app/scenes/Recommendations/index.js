@@ -12,29 +12,6 @@ class Recommendations extends Component {
     this.props.fetchBooks('Deep Learning');
   }
 
-  handleBookFavoriteClick(isFavorite, book, favBookIds) {
-    this.props.auth.isEmpty && window.location.replace('/login'); // user not logged in, redirect to login
-
-    isFavorite ?
-      this.removeBookFromFavorites(book, favBookIds)
-      : this.addBookToFavorites(book, favBookIds);
-  }
-
-  addBookToFavorites(book, favBooks) {
-    favBooks.push(book.id);
-    this.props.firebase.database().ref(`users/${this.props.auth.uid}`).update({
-      favorites: favBooks,
-    });
-  }
-
-  removeBookFromFavorites(book, favBooks) {
-    const index = favBooks.indexOf(book.id);
-    if (index !== -1) favBooks.splice(index, 1);
-    this.props.firebase.database().ref(`users/${this.props.auth.uid}`).update({
-      favorites: favBooks,
-    });
-  }
-
   renderBooks() {
     const favs = this.props.profile.favorites || [];
     const favBookIds = Object.keys(favs).map(k => favs[k]);
@@ -43,9 +20,8 @@ class Recommendations extends Component {
       return (
           <BookCard key={book.id} apiId={book.id} book={book}
             title={book.volumeInfo.title} authors={book.volumeInfo.authors}
-            thumbnail={book.volumeInfo.imageLinks.thumbnail}
-            isFavorite={isFavorite}
-            addToFavoritesFunc={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds) }
+            isFavorite={isFavorite} favBookIds={favBookIds} auth={this.props.auth}
+            firebase={this.props.firebase}
           />
       );
     });
