@@ -1,5 +1,5 @@
 {
-  parser: "babel-eslint",
+  "parser": "babel-eslint",
   "rules": {
     "no-unused-expressions": 0,
     "react/prop-types": 0,
@@ -7,7 +7,7 @@
     "class-methods-use-this": 0
   },
   "env": {
-    "browser": true,
+    "browser": true
   },
   "extends": [
     "eslint:recommended",
