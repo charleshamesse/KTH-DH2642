@@ -19,6 +19,7 @@ class BookDetail extends Component {
       const favs = this.props.profile.favorites || [];
       const favBookIds = Object.keys(favs).map(k => favs[k]);
       const { book } = this.props;
+      const { authors } = book.volumeInfo;
       return (
         <div className="row">
           <div className="col-md-4 card bg-light">
@@ -36,7 +37,7 @@ class BookDetail extends Component {
           </div>
           <div className="col-md-8">
             <h6>Authors</h6>
-            <p>{book.volumeInfo.authors.join(', ')}</p>
+            <p>{authors ? authors.join(', ') : 'Unknown'}</p>
             <h6>Description</h6>
             {
               // TODO: find an alternative to this dangerouslySetInnerHTML
