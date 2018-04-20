@@ -15,6 +15,7 @@ import Logout from './scenes/Logout';
 import Search from './scenes/Search';
 import Recommendations from './scenes/Recommendations';
 import Profile from './scenes/Profile';
+import BookDetail from './scenes/BookDetail';
 
 
 import reducers from './reducers';
@@ -60,16 +61,16 @@ export default class App extends React.Component {
                 https://stackoverflow.com/a/43958016/4789016
             */}
             <Switch>
-              <Route exact path="/" render={() => (
+              {/* <Route exact path="/" render={() => (
                   <Redirect to="/home"/>
-              )}/>
-              <Route path="/home" component={Introduction} />
+              )}/> */}
+              <Route exact path="/home" component={Introduction} />
+              <Route path="/books/:id" component={BookDetail} />
               <Route path="/search" component={Search} />
               <Route path="/login" component={Login} />
               <Route path="/bookshelf" component={Recommendations} />
               <Route path="/profile" component={Profile} />
               <Route path="/logout" component={Logout} />
-              <Route path="/books/:id" component={Profile} />
               <Redirect to="/home"/>
             </Switch>
           </main>
