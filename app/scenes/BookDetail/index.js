@@ -5,13 +5,44 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { fetchBook } from '../../actions';
 import BookCard from '../../components/BookCard';
+import CreateComment from '../../components/CreateComment';
+import CommentCard from '../../components/CommentCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 class BookDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: [],
+    };
+  }
+
   componentDidMount() {
     const bookIdFromURL = this.props.match.params.id;
     this.props.fetchBook(bookIdFromURL);
+    this.getComments();
+  }
+
+  getComments() {
+    const ref = this.props.firebase.database().ref(`bookComments/${this.props.book.id}`);
+    ref.on('value', (snapshot) => {
+      this.setState({
+        comments: snapshot.val().comments,
+      });
+    }, (errorObject) => {
+      console.log(`The read failed: ${errorObject.code}`);
+    }, this);
+  }
+
+  renderComments() {
+    // TODO if no favorites, display that
+    // TODO remove book from favorites
+    const arr = Object.keys(this.state.comments).map(k => this.state.comments[k]);
+    const listItems = arr.map((comment, i) => <CommentCard key={i}
+                                                           username={comment.username}
+                                                           commentText={comment.text} />);
+    return (listItems);
   }
 
   renderBookDetail(isFavorite) {
@@ -48,6 +79,19 @@ class BookDetail extends Component {
             }
             <p dangerouslySetInnerHTML={{ __html: book.volumeInfo.description }}>
             </p>
+            <div>
+              {this.state.comments ? <h3>Comments </h3> : <h3>No comments for this book yet...</h3>}
+              {this.renderComments()}
+            </div>
+            <br />
+            <br />
+            <div>
+              <CreateComment username={this.props.profile.displayName}
+                             bookId={this.props.book.id}
+                             timestamp={new Date()}
+                             firebase={this.props.firebase}
+                             comments={this.state.comments} />
+            </div>
           </div>
         </div>
       );
@@ -60,7 +104,6 @@ class BookDetail extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="container">
         <div className="row">
