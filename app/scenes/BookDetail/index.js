@@ -20,6 +20,10 @@ class BookDetail extends Component {
       const favBookIds = Object.keys(favs).map(k => favs[k]);
       const { book } = this.props;
       const { authors } = book.volumeInfo;
+      const { saleInfo } = book;
+      const isForSale = saleInfo.saleability === 'FOR_SALE';
+      const buyLink = isForSale ? saleInfo.buyLink : '#';
+      const price = isForSale ? `${saleInfo.listPrice.amount}  ${saleInfo.listPrice.currencyCode} ` : 'N/A ';
       return (
         <div className="row">
           <div className="col-md-4 card bg-light">
@@ -27,12 +31,12 @@ class BookDetail extends Component {
               <h5 className="card-title">{book.volumeInfo.title}</h5>
               <p className="card-text">{book.volumeInfo.subtitle}</p>
             </div>
-
             <img className="card-img" src={`https://books.google.com/books/content/images/frontcover/${book.id}?fife=w300-h450`} alt="Card image cap" />
-
             <div className="card-body">
-              <a href="#" className="card-link">Card link</a>
-              <a href="#" className="card-link">Another link</a>
+              <p>Price: {price}</p>
+              {isForSale
+                ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>
+                : <span>Book not availabe for purcash.</span>}
             </div>
           </div>
           <div className="col-md-8">
