@@ -10,7 +10,6 @@ import BookShelfBar from '../../components/BookShelfBar';
 class Bookshelf extends Component {
   renderFavorites(favorites) {
     // TODO if no favorites, display that
-    // TODO remove book from favorites
     const arr = Object.keys(favorites).map(k => favorites[k]);
     const listItems = arr.map(id => <li key={id}>{id}</li>);
     return (<ul>{listItems}</ul>);
@@ -22,9 +21,8 @@ class Bookshelf extends Component {
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
         return (
           <div>
-            <h1>Hi, {this.props.profile.displayName}</h1>
             <h2>BookShelf</h2>
-            {this.renderFavorites(this.props.profile.favorites)}
+            { <BookShelfBar books={this.props.profile.favorites} /> }
           </div>
         );
       } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
@@ -44,12 +42,7 @@ class Bookshelf extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h2>Bookshelf</h2>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <BookShelfBar books={this.props.profile.favorites} />
+              {this.renderContent()}
             </div>
           </div>
         </div>
