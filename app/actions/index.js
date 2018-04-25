@@ -18,7 +18,7 @@ export const PENDING = '_PENDING';
 
 // Action creators
 export function fetchBooks(queryString) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString}&maxResults=8`;
+  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}&maxResults=8`;
   const request = axios.get(url);// .then(response => response.data.items);
 
   return {

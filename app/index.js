@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 import promiseMiddleware from 'redux-promise-middleware';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { reactReduxFirebase } from 'react-redux-firebase';
@@ -19,9 +22,16 @@ import Profile from './scenes/Profile';
 import BookDetail from './scenes/BookDetail';
 
 
-import reducers from './reducers';
+import rootReducer from './reducers';
 
 import './custom.scss';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const reducers = persistReducer(persistConfig, rootReducer);
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCIEdAaHlo6AiAjxpvxfQ4OlvHKba7sZWw',
@@ -48,6 +58,7 @@ const createStoreWithFirebase = compose(reactReduxFirebase(firebase, rrfConfig))
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware())(createStoreWithFirebase);
 
 const store = createStoreWithMiddleware(reducers);
+const persistor = persistStore(store);
 
 
 export default class App extends React.Component {
@@ -84,7 +95,9 @@ export default class App extends React.Component {
 }
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('app'),
 );

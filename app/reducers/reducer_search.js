@@ -1,24 +1,24 @@
 import _ from 'lodash';
-import { FETCH_BOOK, FULFILLED, PENDING } from '../actions';
+import { FETCH_BOOKS, FULFILLED, PENDING } from '../actions';
 
 const initialState = {
-  book: {},
+  searchString: '',
   loading: true,
 };
 
 
 export default function (state = initialState, action) {
-  console.log('Book Detail. Action received:', action);
+  console.log('Search. Action received:', action);
 
   switch (action.type) {
-    case FETCH_BOOK + PENDING:
+    case FETCH_BOOKS + PENDING:
       return { ...state, loading: true };
 
-    case FETCH_BOOK + FULFILLED: {
+    case FETCH_BOOKS + FULFILLED: {
       return {
         ...state,
         loading: false,
-        book: action.payload.data,
+        searchString: state.searchString,
       };
     }
     default: {

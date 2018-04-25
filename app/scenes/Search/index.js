@@ -11,24 +11,19 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 class Search extends Component {
   constructor(props) {
     super(props);
-
     // TODO:
     // Manage state properly with redux (problems when switching pages)
-    this.state = {
-      searchQuery: '',
-    };
+    this.handleChange = this.handleChange.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
-    this.search = debounce(500, this.search);
-    this.handleChange = this.handleChange.bind(this);
+    // this.search = debounce(100, this.search);
   }
 
   handleChange(event) {
-    this.setState({
-      searchQuery: event.target.value,
-    });
-    this.search(this.state.searchQuery);
+    this.props.searchData.searchString = event.target.value;
+    this.search(event.target.value);
   }
 
   search(e) {
@@ -54,7 +49,7 @@ class Search extends Component {
     if (this.props.loading) {
       return (<LoadingSpinner />);
     }
-    if (this.state.searchQuery) {
+    if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (
           <div className="album py-5">
@@ -65,7 +60,7 @@ class Search extends Component {
 
               </div>
               <div className="card-columns">
-                {this.props.profile ? this.renderBooks() : 'Loading'}
+              {this.props.profile ? this.renderBooks() : 'Loading'}
               </div>
 
             </div>
@@ -82,14 +77,13 @@ class Search extends Component {
   }
 
   render() {
-    console.log(this.props.books);
     return (
       <div className="container-fluid">
         <div className="row flex-xl-nowrap">
           <div className="col-md-4 offset-md-4 below-nav">
             <h2>Search</h2>
             <p>
-              <input className="form-control" onChange={this.handleChange} value={this.state.searchQuery} />
+              <input className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
             </p>
           </div>
         </div>
@@ -103,11 +97,7 @@ class Search extends Component {
   }
 }
 
-// Anything returned from this function will end up as props
-// on the BookList container
 function mapDispatchToProps(dispatch) {
-  // Whenever selectBook is called, the result should be passed
-  // to all of our reducers
   return bindActionCreators({ fetchBooks }, dispatch);
 }
 
@@ -119,6 +109,7 @@ const SearchWithFirebase = compose(
       loading: state.bookHandler.loading,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
+      searchData: state.searchData,
     }),
     mapDispatchToProps,
   ),
