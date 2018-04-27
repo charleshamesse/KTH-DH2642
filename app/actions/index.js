@@ -7,6 +7,7 @@ const ROOT_URL_SEARCH = `${ROOT_URL}volumes?key=${API_KEY}`;
 const ROOT_URL_GET = `${ROOT_URL}volumes/`;
 
 // Action names
+export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_BOOK = 'FETCH_BOOK';
 export const MOVE_BOOKCARD = 'MOVE_BOOKCARD';
@@ -23,6 +24,17 @@ export function fetchBooks(queryString) {
 
   return {
     type: FETCH_BOOKS,
+    payload: request,
+  };
+}
+
+export function fetchComments(bookId, firebase) {
+  const ref = firebase.database().ref(`bookComments/${bookId}`);
+  const request = new Promise((resolve, reject) => {
+    resolve(ref.once('value', snapshot => snapshot));
+  });
+  return {
+    type: FETCH_COMMENTS,
     payload: request,
   };
 }
