@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const CommentCard = ({ commentText, username }) => (
   <div className="card row">
     <div className="card-header">
-      {username}
+      <strong>{username}</strong>
     </div>
     <div className="card-body">
       <p className="card-text">{commentText}</p>
