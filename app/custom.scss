@@ -17,6 +17,13 @@ $font-weight-base: 200;
     column-count: 4;
   }
 }
+
+#search-helper {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
 // Album template
 :root {
     --jumbotron-padding-y: 3rem;

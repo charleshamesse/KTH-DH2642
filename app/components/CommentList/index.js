@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import CommentCard from '../../components/CommentCard';
 
 const renderComments = (comments) => {
+  console.log(comments);
   if (Object.keys(comments).length !== 0) {
     const arr = Object.keys(comments).map(k => comments[k]);
     const listItems = arr.map((comment, i) => <CommentCard key={i}

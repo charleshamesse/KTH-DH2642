@@ -3,12 +3,13 @@ import { FETCH_BOOKS, FULFILLED, PENDING } from '../actions';
 
 const initialState = {
   searchString: '',
+  searchCategory: 'bookTitle',
   loading: true,
 };
 
 
 export default function (state = initialState, action) {
-  console.log('Search. Action received:', action);
+  console.log('Search. Action received:', state);
 
   switch (action.type) {
     case FETCH_BOOKS + PENDING:
@@ -19,6 +20,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         searchString: state.searchString,
+        searchCategory: state.searchCategory,
       };
     }
     default: {

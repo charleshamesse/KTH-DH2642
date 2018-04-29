@@ -18,8 +18,10 @@ export const FULFILLED = '_FULFILLED';
 export const PENDING = '_PENDING';
 
 // Action creators
-export function fetchBooks(queryString) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}&maxResults=8`;
+export function fetchBooks(queryString, searchCategory) {
+  // GET https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
+
+  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}+${searchCategory}&maxResults=8`;
   const request = axios.get(url);// .then(response => response.data.items);
 
   return {

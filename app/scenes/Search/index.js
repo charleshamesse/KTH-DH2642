@@ -22,12 +22,17 @@ class Search extends Component {
   }
 
   handleChange(event) {
-    this.props.searchData.searchString = event.target.value;
-    this.search(event.target.value);
+    console.log('event', event.target);
+    if (event.target.id === 'search-input') {
+      this.props.searchData.searchString = event.target.value;
+    } else {
+      this.props.searchData.searchCategory = event.target.value;
+    }
+    this.search(this.props.searchData.searchString, this.props.searchData.searchCategory);
   }
 
-  search(e) {
-    this.props.fetchBooks(e);
+  search(s, c) {
+    this.props.fetchBooks(s, c);
   }
 
   renderBooks() {
@@ -72,7 +77,7 @@ class Search extends Component {
       );
     }
     return (
-      <p>On your mark..</p>
+      <div id='search-helper'>Search for any book you want..</div>
     );
   }
 
@@ -82,9 +87,18 @@ class Search extends Component {
         <div className="row flex-xl-nowrap">
           <div className="col-md-4 offset-md-4 below-nav">
             <h2>Search</h2>
-            <p>
-              <input className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
-            </p>
+            <form id="this-is-form-id">
+              <input id="search-input" className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
+              <div className="form-group">
+                <label htmlFor="exampleFormControlSelect2">Search in:</label>
+                <select value={this.props.searchData.searchCategory} id="search-categories" onChange={this.handleChange} className="form-control">
+                  <option value="intitle">Book Titles</option>
+                  <option value="inauthor" >Author names</option>
+                  <option value="subject">Subject text</option>
+                  <option value="isbn">ISBN</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
         <div className="row flex-xl-nowrap">
