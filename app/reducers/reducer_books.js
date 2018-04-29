@@ -15,6 +15,7 @@ export default function (state = initialState, action) {
       return { ...state, loading: true };
 
     case FETCH_BOOKS + FULFILLED: {
+      console.log(action.payload.data.items);
       return {
         ...state,
         loading: false,

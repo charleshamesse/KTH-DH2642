@@ -22,12 +22,16 @@ class Search extends Component {
   }
 
   handleChange(event) {
-    this.props.searchData.searchString = event.target.value;
-    this.search(event.target.value);
+    if (event.target.id === 'search-input') {
+      this.props.searchData.searchString = event.target.value;
+    } else {
+      this.props.searchData.searchCategory = event.target.value;
+    }
+    this.search(this.props.searchData.searchString, this.props.searchData.searchCategory);
   }
 
-  search(e) {
-    this.props.fetchBooks(e);
+  search(s, c) {
+    this.props.fetchBooks(s, c);
   }
 
   renderBooks() {
@@ -47,32 +51,28 @@ class Search extends Component {
 
   renderContent() {
     if (this.props.loading) {
-      return (<LoadingSpinner />);
+      return (<div className="col-md-4 offset-md-5 "><LoadingSpinner/></div>);
     }
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (
-          <div className="album py-5">
-            <div className="container">
-              <div className="my-3 py-3">
-                <h2 className="display-5">Results</h2>
-                <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
-
-              </div>
-              <div className="card-columns">
-              {this.props.profile ? this.renderBooks() : 'Loading'}
-              </div>
-
+          <div className="container">
+            <div className="my-3 py-3">
+              <h2 className="display-5">Results</h2>
+              <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
+            </div>
+            <div className="card-columns">
+            {this.props.profile ? this.renderBooks() : 'Loading'}
             </div>
           </div>
         );
       }
       return (
-        <LoadingSpinner />
+        <strong className="col-md-3 offset-md-4">No results found for that query...</strong>
       );
     }
     return (
-      <p>On your mark..</p>
+      <div id='search-helper'>Search for any book you want..</div>
     );
   }
 
@@ -82,13 +82,22 @@ class Search extends Component {
         <div className="row flex-xl-nowrap">
           <div className="col-md-4 offset-md-4 below-nav">
             <h2>Search</h2>
-            <p>
-              <input className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
-            </p>
+            <form id="this-is-form-id">
+              <input id="search-input" className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
+              <div className="form-group">
+                <label htmlFor="exampleFormControlSelect2">Search in:</label>
+                <select value={this.props.searchData.searchCategory} id="search-categories" onChange={this.handleChange} className="form-control">
+                  <option value="intitle">Book Titles</option>
+                  <option value="inauthor" >Author names</option>
+                  <option value="subject">Subject text</option>
+                  <option value="isbn">ISBN</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
         <div className="row flex-xl-nowrap">
-          <div className="col-12 py-md-3 pl-md-5 bd-content">
+          <div className="col-12">
             {this.renderContent()}
           </div>
         </div>
