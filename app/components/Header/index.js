@@ -3,15 +3,12 @@ import { Link } from 'react-router-dom';
 
 const Header = () => (
   <header>
-    <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <nav className="navbar navbar-expand navbar-dark bg-secondary">
       <div id="wrapper" className="container-fluid">
         <div id="header-title">
           <Link to="/home" className="navbar-brand">G. Readmore</Link>
         </div>
-        <button className="navbar-toggler in" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbarNavDropdown" className="collapse d-lg-block">
+        <div id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/home" className="nav-link">Home</Link>

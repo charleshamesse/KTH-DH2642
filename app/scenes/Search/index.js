@@ -22,7 +22,6 @@ class Search extends Component {
   }
 
   handleChange(event) {
-    console.log('event', event.target);
     if (event.target.id === 'search-input') {
       this.props.searchData.searchString = event.target.value;
     } else {
@@ -52,28 +51,24 @@ class Search extends Component {
 
   renderContent() {
     if (this.props.loading) {
-      return (<LoadingSpinner />);
+      return (<div className="col-md-4 offset-md-5 "><LoadingSpinner/></div>);
     }
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (
-          <div className="album py-5">
-            <div className="container">
-              <div className="my-3 py-3">
-                <h2 className="display-5">Results</h2>
-                <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
-
-              </div>
-              <div className="card-columns">
-              {this.props.profile ? this.renderBooks() : 'Loading'}
-              </div>
-
+          <div className="container">
+            <div className="my-3 py-3">
+              <h2 className="display-5">Results</h2>
+              <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
+            </div>
+            <div className="card-columns">
+            {this.props.profile ? this.renderBooks() : 'Loading'}
             </div>
           </div>
         );
       }
       return (
-        <LoadingSpinner />
+        <strong className="col-md-3 offset-md-4">No results found for that query...</strong>
       );
     }
     return (
@@ -102,7 +97,7 @@ class Search extends Component {
           </div>
         </div>
         <div className="row flex-xl-nowrap">
-          <div className="col-12 py-md-3 pl-md-5 bd-content">
+          <div className="col-12">
             {this.renderContent()}
           </div>
         </div>
