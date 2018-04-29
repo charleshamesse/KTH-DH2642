@@ -5,6 +5,7 @@ const initialState = {
   book: {},
   loadingBook: true,
   loadingComments: true,
+  comments: [],
 };
 
 
