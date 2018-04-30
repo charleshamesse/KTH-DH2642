@@ -4,7 +4,8 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { debounce } from 'throttle-debounce';
-import { fetchBooks } from '../../actions';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { fetchBooks, fetchMoreBooks } from '../../actions';
 import BookCard from '../../components/BookCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -15,6 +16,7 @@ class Search extends Component {
     // Manage state properly with redux (problems when switching pages)
     this.handleChange = this.handleChange.bind(this);
     this.search = this.search.bind(this);
+    this.hasMore = this.hasMore.bind(this);
   }
 
   componentDidMount() {
@@ -26,8 +28,15 @@ class Search extends Component {
     this.search(event.target.value);
   }
 
-  search(e) {
-    this.props.fetchBooks(e);
+  search(query) {
+    this.props.fetchBooks(query);
+  }
+
+  hasMore() {
+    console.log('hasMore');
+    const { totalBooks } = this.props;
+    const currentBooks = Object.keys(this.props.books).length;
+    return currentBooks < totalBooks;
   }
 
   renderBooks() {
@@ -35,32 +44,51 @@ class Search extends Component {
     const favBookIds = Object.keys(favs).map(k => favs[k]);
     return _.map(this.props.books, (book) => {
       const isFavorite = favBookIds.includes(book.id);
-      return (
+      if (book.volumeInfo) {
+        return (
           <BookCard key={book.id} apiId={book.id} book={book}
             title={book.volumeInfo.title} authors={book.volumeInfo.authors}
             isFavorite={isFavorite} favBookIds={favBookIds} auth={this.props.auth}
             firebase={this.props.firebase}
           />
-      );
+        );
+      }
+      return '';
     });
   }
 
+  fetchMoreData = () => {
+    console.log('fetchMoreData');
+    this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.bookPage);
+  };
+
   renderContent() {
+    /*
     if (this.props.loading) {
       return (<LoadingSpinner />);
     }
+    */
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (
           <div className="album py-5">
             <div className="container">
               <div className="my-3 py-3">
-                <h2 className="display-5">Results</h2>
+                <h2 className="display-5">Results ({Object.keys(this.props.books).length} / {this.props.totalBooks})</h2>
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
               <div className="card-columns">
-              {this.props.profile ? this.renderBooks() : 'Loading'}
+                {// this.props.profile ? this.renderBooks() : 'Loading'
+                }
+                <InfiniteScroll
+                  dataLength={this.props.books.length}
+                  next={this.fetchMoreData}
+                  hasMore={this.hasMore()}
+                  loader={<h4>Loading...</h4>}
+                >
+                    {this.renderBooks()}
+                  </InfiniteScroll>
               </div>
 
             </div>
@@ -98,7 +126,7 @@ class Search extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchBooks }, dispatch);
+  return bindActionCreators({ fetchBooks, fetchMoreBooks }, dispatch);
 }
 
 const SearchWithFirebase = compose(
@@ -106,7 +134,9 @@ const SearchWithFirebase = compose(
   connect(
     state => ({
       books: state.bookHandler.books,
+      totalBooks: state.bookHandler.totalBooks,
       loading: state.bookHandler.loading,
+      bookPage: state.bookHandler.bookPage,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
       searchData: state.searchData,
