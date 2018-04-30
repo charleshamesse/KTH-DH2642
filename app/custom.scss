@@ -17,6 +17,13 @@ $font-weight-base: 200;
     column-count: 4;
   }
 }
+
+#search-helper {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
 // Album template
 :root {
     --jumbotron-padding-y: 3rem;
@@ -58,7 +65,16 @@ $font-weight-base: 200;
   .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 
 .below-nav {
-  margin-top: 100px;
+  margin-top: 25px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select:focus,
+  textarea:focus,
+  input:focus {
+    font-size: 16px;
+    background: #eee;
+  }
 }
 
 .spacer {
@@ -79,6 +95,7 @@ section.content {
   animation: spin 2s linear infinite;
   margin: 15px;
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
