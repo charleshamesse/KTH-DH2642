@@ -36,7 +36,9 @@ class Search extends Component {
     console.log('hasMore');
     const { totalBooks } = this.props;
     const currentBooks = Object.keys(this.props.books).length;
-    return currentBooks < totalBooks;
+    const ans = currentBooks < totalBooks;
+    console.log(ans);
+    return true; // ans;
   }
 
   search(s, c) {
@@ -74,6 +76,7 @@ class Search extends Component {
     */
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
+        console.log('render');
         return (
             <div className="container">
               <div className="my-3 py-3">
@@ -85,10 +88,13 @@ class Search extends Component {
                 {// this.props.profile ? this.renderBooks() : 'Loading'
                 }
                 <InfiniteScroll
-                  dataLength={this.props.books.length}
+                  dataLength={Object.keys(this.props.books).length}
                   next={this.fetchMoreData}
                   hasMore={this.hasMore()}
                   loader={<h4>Loading...</h4>}
+                  endMessage={
+                    <p>Done!</p>
+                  }
                 >
                     {this.renderBooks()}
                   </InfiniteScroll>
