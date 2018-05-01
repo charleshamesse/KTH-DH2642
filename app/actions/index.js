@@ -15,13 +15,13 @@ export const FETCH_BOOK = 'FETCH_BOOK';
 export const MOVE_BOOKCARD = 'MOVE_BOOKCARD';
 
 // Since we're using the middleware redux-promise-middleware
-// Promise actions dispatch pending actions and then fulfilled actions.
+// Promise actions dispatch pending actions and then fulfilled/rejected actions.
 export const FULFILLED = '_FULFILLED';
 export const PENDING = '_PENDING';
 
 // Action creators
-export function fetchBooks(queryString, searchCategory) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}+${searchCategory}&maxResults=${RESULTS_PER_PAGE}`;
+export function fetchBooks(queryString, type) {
+  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}+${type}&maxResults=${RESULTS_PER_PAGE}`;
   const request = axios.get(url);// .then(response => response.data.items);
 
   return {
@@ -30,12 +30,9 @@ export function fetchBooks(queryString, searchCategory) {
   };
 }
 
-export function fetchMoreBooks(queryString, page) {
-  console.log('fetchMoreBooks action');
-  console.log(page);
-  const startIndex = page * RESULTS_PER_PAGE;
-  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}&maxResults=${RESULTS_PER_PAGE}&startIndex=${startIndex}`;
-  const request = axios.get(url);// .then(response => response.data.items);
+export function fetchMoreBooks(queryString, nextIndex) {
+  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}&maxResults=${RESULTS_PER_PAGE}&startIndex=${nextIndex}`;
+  const request = axios.get(url);
 
   return {
     type: FETCH_MORE_BOOKS,

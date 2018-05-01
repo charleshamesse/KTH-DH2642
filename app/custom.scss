@@ -100,3 +100,7 @@ section.content {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.book-results-container, .book-results-container div {
+  width: 100%;
+}

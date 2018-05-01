@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
 
-import BooksReducer from './reducer_books';
-import BookShelfBarReducer from './reducer_bookshelfbar';
-import BookDetailReducer from './reducer_book_detail';
-import SearchReducer from './reducer_search';
+import BooksReducer from './BookReducer';
+import BookShelfBarReducer from './BookshelfReducer';
+import BookDetailReducer from './BookDetailReducer';
+import SearchReducer from './SearchReducer';
 
 const rootReducer = combineReducers({
   bookHandler: BooksReducer,

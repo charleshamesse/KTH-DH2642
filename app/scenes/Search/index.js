@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
 import { debounce } from 'throttle-debounce';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchBooks, fetchMoreBooks } from '../../actions';
@@ -24,6 +24,7 @@ class Search extends Component {
   }
 
   handleChange(event) {
+    // Handles change on the search parameters
     if (event.target.id === 'search-input') {
       this.props.searchData.searchString = event.target.value;
     } else {
@@ -32,20 +33,25 @@ class Search extends Component {
     this.search(this.props.searchData.searchString, this.props.searchData.searchCategory);
   }
 
+  search(queryString, type) {
+    // Does the search when changing parameters
+    this.props.fetchBooks(queryString, type);
+  }
+
+  fetchMoreBooks() {
+    // Does the search when loading more, called in the InfiniteScroll component
+    return this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.nextIndex);
+  }
+
   hasMore() {
-    console.log('hasMore');
+    // Checks if there are other books to load
     const { totalBooks } = this.props;
     const currentBooks = Object.keys(this.props.books).length;
-    const ans = currentBooks < totalBooks;
-    console.log(ans);
-    return true; // ans;
+    return currentBooks < totalBooks;
   }
 
-  search(s, c) {
-    this.props.fetchBooks(s, c);
-  }
-
-  renderBooks() {
+  renderBookCards() {
+    // Renders the list of book cards inside the InfiniteScroll container
     const favs = this.props.profile.favorites || [];
     const favBookIds = Object.keys(favs).map(k => favs[k]);
     return _.map(this.props.books, (book) => {
@@ -63,20 +69,24 @@ class Search extends Component {
     });
   }
 
-  fetchMoreData = () => {
-    console.log('fetchMoreData');
-    this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.bookPage);
-  };
+  renderBookCardContainer() {
+    // Renders the InfiniteScroll container
+    return (
+      <InfiniteScroll
+        dataLength={Object.keys(this.props.books).length}
+        next={this.fetchMoreBooks}
+        hasMore={this.hasMore()}
+        loader={<LoadingSpinner/>}
+        >
+        {this.renderBookCards()}
+      </InfiniteScroll>
+    );
+  }
 
-  renderContent() {
-    /*
-    if (this.props.loading) {
-      return (<div className="col-md-4 offset-md-5 "><LoadingSpinner/></div>);
-    }
-    */
+  renderResults() {
+    // Renders the higher-level component of results
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
-        console.log('render');
         return (
             <div className="container">
               <div className="my-3 py-3">
@@ -84,20 +94,10 @@ class Search extends Component {
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
-              <div className="card-columns">
-                {// this.props.profile ? this.renderBooks() : 'Loading'
+              <div className="card-columns book-results-container">
+                {
+                  this.props.profile ? this.renderBookCardContainer() : 'Loading'
                 }
-                <InfiniteScroll
-                  dataLength={Object.keys(this.props.books).length}
-                  next={this.fetchMoreData}
-                  hasMore={this.hasMore()}
-                  loader={<h4>Loading...</h4>}
-                  endMessage={
-                    <p>Done!</p>
-                  }
-                >
-                    {this.renderBooks()}
-                  </InfiniteScroll>
               </div>
             </div>
         );
@@ -112,6 +112,7 @@ class Search extends Component {
   }
 
   render() {
+    // Main render method
     return (
       <div className="container-fluid">
         <div className="row flex-xl-nowrap">
@@ -133,7 +134,7 @@ class Search extends Component {
         </div>
         <div className="row flex-xl-nowrap">
           <div className="col-12">
-            {this.renderContent()}
+            {this.renderResults()}
           </div>
         </div>
       </div>
@@ -141,6 +142,8 @@ class Search extends Component {
   }
 }
 
+
+// Redux and firebase bindings
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchBooks, fetchMoreBooks }, dispatch);
 }
@@ -152,7 +155,7 @@ const SearchWithFirebase = compose(
       books: state.bookHandler.books,
       totalBooks: state.bookHandler.totalBooks,
       loading: state.bookHandler.loading,
-      bookPage: state.bookHandler.bookPage,
+      nextIndex: state.bookHandler.nextIndex,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
       searchData: state.searchData,

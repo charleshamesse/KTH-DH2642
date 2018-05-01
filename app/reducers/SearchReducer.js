@@ -7,10 +7,7 @@ const initialState = {
   loading: true,
 };
 
-
 export default function (state = initialState, action) {
-  console.log('Search. Action received:', state);
-
   switch (action.type) {
     case FETCH_BOOKS + PENDING:
       return { ...state, loading: true };
