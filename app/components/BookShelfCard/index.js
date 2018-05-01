@@ -51,10 +51,18 @@ const propTypes = {
   moveCard: PropTypes.func.isRequired,
 };
 
+const getAuthors = (authors) => {
+  if (authors) {
+    return authors.join(', ');
+  }
+  return '';
+};
+
 class BookshelfCard extends Component {
   render() {
     const {
       title,
+      authors,
       id,
       isDragging,
       connectDragSource,
@@ -69,7 +77,7 @@ class BookshelfCard extends Component {
             <img className="card-img-top book-card-img-small" src={`https://books.google.com/books/content/images/frontcover/${id}?fife=w300-h450`} alt="Card image cap" />
             <div className="card-body">
               <h6>{_.truncate(title)}</h6>
-              <p className="card-text"><small className="text-muted">Yo</small></p>
+              <p className="card-text"><small className="text-muted">{_.truncate(getAuthors(authors))}</small></p>
             </div>
           </Link>
         </div>

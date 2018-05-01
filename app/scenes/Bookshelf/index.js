@@ -13,11 +13,16 @@ class Bookshelf extends Component {
   }
 
   fetchFavoritesIfNeeded() {
+    /*
     if (!this.props.favorites.loading) {
+      console.log('loading fav');
       this.props.fetchFavorites(this.props.profile.favorites);
     }
     return this.props.favorites;
+    */
+    return true;
   }
+
   renderContent() {
     // When auth is loaded
     if (isLoaded(this.props.auth)) {
@@ -25,13 +30,12 @@ class Bookshelf extends Component {
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
         // When favorites are loaded, display content
         if (this.fetchFavoritesIfNeeded()) {
-          console.log(this.props.favorites.books);
           return (
             <div className="container">
               <div className="my-3 py-3">
                 <h2 className="display-5">Bookshelf</h2>
                 <p className="text-lead">Have your favorite books organized the way you want.</p>
-                <BookshelfContainer/>
+                <BookshelfContainer bookIds={this.props.profile.favorites} />
               </div>
           </div>
           );
