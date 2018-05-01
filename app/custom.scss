@@ -26,33 +26,33 @@ $font-weight-base: 200;
 
 // Album template
 :root {
-    --jumbotron-padding-y: 3rem;
-  }
-  
+  --jumbotron-padding-y: 3rem;
+}
+
+.jumbotron {
+  padding-bottom: var(--jumbotron-padding-y);
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
   .jumbotron {
-    padding-bottom: var(--jumbotron-padding-y);
-    margin-bottom: 0;
-    background-color: #fff;
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+    padding-bottom: calc(var(--jumbotron-padding-y) * 2);
   }
-  @media (min-width: 768px) {
-    .jumbotron {
-      padding-top: calc(var(--jumbotron-padding-y) * 2);
-      padding-bottom: calc(var(--jumbotron-padding-y) * 2);
-    }
-  }
-  
-  .jumbotron p:last-child {
-    margin-bottom: 0;
-  }
-  
-  .jumbotron-heading {
-    font-weight: 300;
-  }
-  
-  .jumbotron .container {
-    max-width: 40rem;
-  }
-  
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
   footer {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -101,6 +101,7 @@ section.content {
   100% { transform: rotate(360deg); }
 }
 
-.book-results-container, .book-results-container div {
-  width: 100%;
+.book-card-img {
+  height: 300px;
+  object-fit: cover;
 }

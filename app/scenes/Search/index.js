@@ -17,6 +17,7 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.search = this.search.bind(this);
     this.hasMore = this.hasMore.bind(this);
+    this.fetchMoreBooks = this.fetchMoreBooks.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +41,7 @@ class Search extends Component {
 
   fetchMoreBooks() {
     // Does the search when loading more, called in the InfiniteScroll component
+    console.log('fetchMore');
     return this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.nextIndex);
   }
 
@@ -76,9 +78,13 @@ class Search extends Component {
         dataLength={Object.keys(this.props.books).length}
         next={this.fetchMoreBooks}
         hasMore={this.hasMore()}
-        loader={<LoadingSpinner/>}
+        loader={<div className="col-md-3"><LoadingSpinner/></div>}
+        endMessage={<div className="row p-4">{'That\'s all we could find!'}</div>}
+        style={{ overflowY: 'hidden' }}
         >
-        {this.renderBookCards()}
+        <div className="row">
+          {this.renderBookCards()}
+        </div>
       </InfiniteScroll>
     );
   }
@@ -94,7 +100,7 @@ class Search extends Component {
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
-              <div className="card-columns book-results-container">
+              <div className="book-results-container">
                 {
                   this.props.profile ? this.renderBookCardContainer() : 'Loading'
                 }
