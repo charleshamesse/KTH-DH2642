@@ -67,7 +67,7 @@ export function fetchBook(bookId) {
 // Bookshelf
 export function fetchFavorites(favorites) {
   const promises = favorites.map((favorite) => {
-    const url = `${ROOT_URL_GET}${favorite}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
+    const url = `${ROOT_URL_GET}${favorite}?key=${API_KEY}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
     const request = axios.get(url);// .then(response => response.data.items);
     return request;
   });
@@ -77,7 +77,19 @@ export function fetchFavorites(favorites) {
     payload: Promise.all(promises),
   };
 }
+/**
+ * Test
+export function fetchFavorites(favorites) {
+  const favoritesQueryString = favorites.join('|');
+  const url = `${ROOT_URL_SEARCH}&q=${favoritesQueryString}`;
+  const request = axios.get(url);// .then(response => response.data.items);
 
+  return {
+    type: FETCH_FAVORITES,
+    payload: request,
+  };
+}
+*/
 export const setBookCardPosition = (dragIndex, hoverIndex) => ({
   type: MOVE_BOOKCARD,
   payload: { dragIndex, hoverIndex },
