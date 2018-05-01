@@ -6,10 +6,11 @@ import { DragDropContext } from 'react-dnd';
 import BookShelfCard from '../BookShelfCard';
 import { setBookCardPosition } from '../../actions/';
 
-class BookShelfBar extends Component {
+class BookshelfContainer extends Component {
   constructor(props) {
     super(props);
     this.moveCard = this.moveCard.bind(this);
+    // console.log(props.books);
   }
 
   moveCard(dragIndex, hoverIndex) {
@@ -17,17 +18,17 @@ class BookShelfBar extends Component {
   }
 
   render() {
-    const { examples, books } = this.props;
+    const { books } = this.props.favorites;
     return (
-      <div className="row">
+      <div className="row px-2">
         { // div>{JSON.stringify(this.props.books)}</div>
         }
-        {examples.map((card, i) => (
+        {books.map((book, i) => (
             <BookShelfCard
-              key={card.id}
+              key={book.data.id}
               index={i}
-              id={card.id}
-              text={card.text}
+              id={book.data.id}
+              title={book.data.volumeInfo.title}
               moveCard={this.moveCard}
             />
         ))}
@@ -38,10 +39,10 @@ class BookShelfBar extends Component {
 
 function mapStateToProps(state) {
   return {
-    examples: state.bookShelfBar.books,
+    favorites: state.favorite, // examples: state.bookshelf.books,
   };
 }
 
-const BookShelfBarDnD = DragDropContext(HTML5Backend)(BookShelfBar);
-const BookShelfBarConnected = connect(mapStateToProps, { setBookCardPosition })(BookShelfBarDnD);
-export default BookShelfBarConnected;
+const BookshelfContainerDnD = DragDropContext(HTML5Backend)(BookshelfContainer);
+const BookshelfContainerConnected = connect(mapStateToProps, { setBookCardPosition })(BookshelfContainerDnD);
+export default BookshelfContainerConnected;

@@ -3,27 +3,41 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators, compose } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-
+import { fetchFavorites } from '../../actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import BookShelfBar from '../../components/BookShelfBar';
+import BookshelfContainer from '../../components/BookshelfContainer';
 
 class Bookshelf extends Component {
-  renderFavorites(favorites) {
-    // TODO if no favorites, display that
-    const arr = Object.keys(favorites).map(k => favorites[k]);
-    const listItems = arr.map(id => <li key={id}>{id}</li>);
-    return (<ul>{listItems}</ul>);
+  componentDidMount() {
+    // this.props.fetchFavorites();
   }
 
-
+  fetchFavoritesIfNeeded() {
+    if (!this.props.favorites.loading) {
+      this.props.fetchFavorites(this.props.profile.favorites);
+    }
+    return this.props.favorites;
+  }
   renderContent() {
+    // When auth is loaded
     if (isLoaded(this.props.auth)) {
+      // When auth is loaded and not empty
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
-        return (
-          <div>
-            <h2>BookShelf</h2>
-            { <BookShelfBar books={this.props.profile.favorites} /> }
+        // When favorites are loaded, display content
+        if (this.fetchFavoritesIfNeeded()) {
+          console.log(this.props.favorites.books);
+          return (
+            <div className="container">
+              <div className="my-3 py-3">
+                <h2 className="display-5">Bookshelf</h2>
+                <p className="text-lead">Have your favorite books organized the way you want.</p>
+                <BookshelfContainer/>
+              </div>
           </div>
+          );
+        }
+        return (
+          <LoadingSpinner />
         );
       } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
         return ( // user is logged in
@@ -38,21 +52,19 @@ class Bookshelf extends Component {
 
   render() {
     return (
-      <section className="content">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              {this.renderContent()}
-            </div>
+      <div className="container">
+        <div className="row flex-xl-nowrap">
+          <div className="col-12">
+            {this.renderContent()}
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ fetchFavorites }, dispatch);
 }
 
 const BookshelfWithFirebase = compose(
@@ -61,6 +73,7 @@ const BookshelfWithFirebase = compose(
     state => ({
       profile: state.firebase.profile,
       auth: state.firebase.auth,
+      favorites: state.favorite,
     }),
     mapDispatchToProps,
   ),

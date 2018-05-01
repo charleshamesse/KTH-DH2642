@@ -12,6 +12,7 @@ export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_MORE_BOOKS = 'FETCH_MORE_BOOKS';
 export const FETCH_BOOK = 'FETCH_BOOK';
+export const FETCH_FAVORITES = 'FETCH_FAVORITES';
 export const MOVE_BOOKCARD = 'MOVE_BOOKCARD';
 
 // Since we're using the middleware redux-promise-middleware
@@ -20,6 +21,7 @@ export const FULFILLED = '_FULFILLED';
 export const PENDING = '_PENDING';
 
 // Action creators
+// Search
 export function fetchBooks(queryString, type) {
   const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}+${type}&maxResults=${RESULTS_PER_PAGE}`;
   const request = axios.get(url);// .then(response => response.data.items);
@@ -40,6 +42,7 @@ export function fetchMoreBooks(queryString, nextIndex) {
   };
 }
 
+// Book Detail
 export function fetchComments(bookId, firebase) {
   const ref = firebase.database().ref(`bookComments/${bookId}`);
   const request = new Promise((resolve, reject) => {
@@ -61,6 +64,19 @@ export function fetchBook(bookId) {
   };
 }
 
+// Bookshelf
+export function fetchFavorites(favorites) {
+  const promises = favorites.map((favorite) => {
+    const url = `${ROOT_URL_GET}${favorite}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
+    const request = axios.get(url);// .then(response => response.data.items);
+    return request;
+  });
+
+  return {
+    type: FETCH_FAVORITES,
+    payload: Promise.all(promises),
+  };
+}
 
 export const setBookCardPosition = (dragIndex, hoverIndex) => ({
   type: MOVE_BOOKCARD,

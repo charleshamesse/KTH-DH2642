@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
+import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 const style = {
   cursor: 'move',
@@ -52,7 +54,8 @@ const propTypes = {
 class BookshelfCard extends Component {
   render() {
     const {
-      text,
+      title,
+      id,
       isDragging,
       connectDragSource,
       connectDropTarget,
@@ -60,9 +63,15 @@ class BookshelfCard extends Component {
     const opacity = isDragging ? 0 : 1;
 
     const content = (
-      <div style={{ ...style, opacity }} className="col-md-3 p-1">
-        <div className="card">
-          {text}
+      <div style={{ ...style, opacity }} className="col-md-2 p-1">
+        <div className="card box-shadow">
+          <Link style={{ color: 'black' }} to={`/books/${id}`}>
+            <img className="card-img-top book-card-img-small" src={`https://books.google.com/books/content/images/frontcover/${id}?fife=w300-h450`} alt="Card image cap" />
+            <div className="card-body">
+              <h6>{_.truncate(title)}</h6>
+              <p className="card-text"><small className="text-muted">Yo</small></p>
+            </div>
+          </Link>
         </div>
       </div>
     );
