@@ -7,7 +7,6 @@ const initialState = {
   loading: true,
 };
 
-
 export default function (state = initialState, action) {
   // console.log('Action received:', action);
 
