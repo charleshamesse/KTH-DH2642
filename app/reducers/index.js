@@ -7,11 +7,10 @@ import BookDetailReducer from './BookDetailReducer';
 import SearchReducer from './SearchReducer';
 
 const rootReducer = combineReducers({
-  bookHandler: BooksReducer,
-  bookShelfBar: BookShelfBarReducer,
+  search: SearchReducer,
   bookDetail: BookDetailReducer,
+  bookShelfBar: BookShelfBarReducer,
   firebase: firebaseReducer,
-  searchData: SearchReducer,
   // firestore: firestoreReducer // needed if using firestore
 });
 

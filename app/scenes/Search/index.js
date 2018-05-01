@@ -12,8 +12,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 class Search extends Component {
   constructor(props) {
     super(props);
-    // TODO:
-    // Manage state properly with redux (problems when switching pages)
     this.handleChange = this.handleChange.bind(this);
     this.search = this.search.bind(this);
     this.hasMore = this.hasMore.bind(this);
@@ -158,13 +156,13 @@ const SearchWithFirebase = compose(
   firebaseConnect(),
   connect(
     state => ({
-      books: state.bookHandler.books,
-      totalBooks: state.bookHandler.totalBooks,
-      loading: state.bookHandler.loading,
-      nextIndex: state.bookHandler.nextIndex,
+      books: state.search.books,
+      totalBooks: state.search.totalBooks,
+      loading: state.search.loading,
+      nextIndex: state.search.nextIndex,
       profile: state.firebase.profile,
       auth: state.firebase.auth,
-      searchData: state.searchData,
+      searchData: state.search,
     }),
     mapDispatchToProps,
   ),
