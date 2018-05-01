@@ -39,7 +39,6 @@ class Search extends Component {
 
   fetchMoreBooks() {
     // Does the search when loading more, called in the InfiniteScroll component
-    console.log('fetchMore');
     return this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.nextIndex);
   }
 
