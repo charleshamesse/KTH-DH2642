@@ -23,9 +23,9 @@ export const PENDING = '_PENDING';
 // Action creators
 // Search
 export function fetchBooks(queryString, type) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}+${type}&maxResults=${RESULTS_PER_PAGE}`;
+  const url = `${ROOT_URL_SEARCH}&q=${queryString}+${type}:${queryString || '*'}&maxResults=${RESULTS_PER_PAGE}`;
   const request = axios.get(url);// .then(response => response.data.items);
-
+  console.log(url);
   return {
     type: FETCH_BOOKS,
     payload: request,
