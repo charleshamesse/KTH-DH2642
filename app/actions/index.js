@@ -66,7 +66,8 @@ export function fetchBook(bookId) {
 
 // Bookshelf
 export function fetchFavorites(favorites) {
-  const promises = favorites.map((favorite) => {
+  const promises = Object.keys(favorites).map((favoriteKey) => {
+    const favorite = favorites[favoriteKey];
     const url = `${ROOT_URL_GET}${favorite}?key=${API_KEY}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
     const request = axios.get(url);// .then(response => response.data.items);
     return request;
