@@ -8,6 +8,11 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import BookshelfContainer from '../../components/BookshelfContainer';
 
 class Bookshelf extends Component {
+  constructor(props) {
+    super(props);
+    this.updateFavorites = this.updateFavorites.bind(this);
+  }
+
   componentDidMount() {
     // this.props.fetchFavorites();
   }
@@ -23,6 +28,12 @@ class Bookshelf extends Component {
     return true;
   }
 
+  updateFavorites(favorites) {
+    this.props.firebase.database().ref(`users/${this.props.auth.uid}`).update({
+      favorites,
+    });
+  }
+
   renderContent() {
     // When auth is loaded
     if (isLoaded(this.props.auth)) {
@@ -35,7 +46,7 @@ class Bookshelf extends Component {
               <div className="my-3 py-3">
                 <h2 className="display-5">Bookshelf</h2>
                 <p className="text-lead">Have your favorite books organized the way you want.</p>
-                <BookshelfContainer bookIds={this.props.profile.favorites} />
+                <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} />
               </div>
           </div>
           );

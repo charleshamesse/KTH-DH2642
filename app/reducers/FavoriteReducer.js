@@ -17,10 +17,19 @@ export default function (state = initialState, action) {
 
     case FETCH_FAVORITES + FULFILLED: {
       console.log('fetch fav ff');
+      console.log(action.payload);
+
+      const { order, data } = action.payload;
+      const books = order.map(key => _.filter(data, {
+        data: {
+          id: key,
+        },
+      })[0]);
+
       return {
         ...state,
         loading: false,
-        books: action.payload, // .data,
+        books, // : action.payload.data, // .data,
       };
     }
 

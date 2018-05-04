@@ -6,6 +6,9 @@ import { bindActionCreators } from 'redux';
 import BookShelfCard from '../BookShelfCard';
 import { fetchFavorites, setBookCardPosition } from '../../actions/';
 
+// TODO
+// For saving: do auto-save every few seconds?
+
 class BookshelfContainer extends Component {
   constructor(props) {
     super(props);
@@ -20,13 +23,28 @@ class BookshelfContainer extends Component {
 
   moveCard(dragIndex, hoverIndex) {
     this.props.setBookCardPosition(dragIndex, hoverIndex);
+    console.log('update');
+
+    // Newly ordered favorites in array
+    const updatedFavoritesArray = this.props.favorites.books.map(bookData => bookData.data.id);
+
+    // Make a dict out of it
+    const updatedFavoritesDict = {};
+    updatedFavoritesArray.forEach((fav, index) => {
+      updatedFavoritesDict[index] = fav;
+    });
+
+    console.log(updatedFavoritesDict);
+    this.props.updateFavoritesFunc(updatedFavoritesDict);
   }
 
   render() {
     // const { books } = this.props;
-    console.log(this.props);
+    console.log('render');
+    console.log(this.props.favorites);
     if (this.props.favorites) {
       const { books } = this.props.favorites;
+      console.log(books);
       return (
         <div className="row px-2">
           {
@@ -53,6 +71,7 @@ class BookshelfContainer extends Component {
 function mapStateToProps(state) {
   return {
     favorites: state.favorite, // examples: state.bookshelf.books,
+    profile: state.firebase.profile, // examples: state.bookshelf.books,
   };
 }
 

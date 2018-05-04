@@ -73,9 +73,17 @@ export function fetchFavorites(favorites) {
     return request;
   });
 
+  const promise = Promise.all(promises).then((data) => {
+    const order = Object.keys(favorites).sort().map(key => favorites[key]);
+    return {
+      data,
+      order,
+    };
+  });
+
   return {
     type: FETCH_FAVORITES,
-    payload: Promise.all(promises),
+    payload: promise,
   };
 }
 /**
