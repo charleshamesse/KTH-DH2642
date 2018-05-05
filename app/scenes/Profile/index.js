@@ -20,10 +20,23 @@ class Profile extends Component {
     if (isLoaded(this.props.auth)) {
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
         return (
-                <div>
-                <h1>Hi, {this.props.profile.displayName}</h1>
-                <h2>Favorites</h2>
-                    {this.renderFavorites(this.props.profile.favorites)}
+                <div className="row flex-xl-nowrap my-3 py-3">
+                  <div className="col-md-4">
+                    <div className="card profile-card">
+                      <img className="rounded mx-auto d-block profile-card-image" width="50%" src={this.props.profile.avatarUrl} alt="Avatar" />
+                      <div className="card-body text-center">
+                        <h5 className="card-title">{this.props.profile.displayName}</h5>
+                      </div>
+                      <div className="card-body">
+                        <p className="card-text">{this.props.profile.email}</p>
+                        <p className="card-text">{Object.keys(this.props.profile.favorites).length} favorite books</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                  <h2>Favorites</h2>
+                      {this.renderFavorites(this.props.profile.favorites)}
+                  </div>
                 </div>
         );
       } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
@@ -39,15 +52,9 @@ class Profile extends Component {
 
   render() {
     return (
-            <section className="content">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            {this.renderContent()}
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <div className="container">
+        {this.renderContent()}
+      </div>
     );
   }
 }
