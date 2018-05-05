@@ -46,7 +46,7 @@ class Bookshelf extends Component {
               <div className="my-3 py-3">
                 <h2 className="display-5">Bookshelf</h2>
                 <p className="text-lead">Have your favorite books organized the way you want.</p>
-                <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} />
+                <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
               </div>
           </div>
           );

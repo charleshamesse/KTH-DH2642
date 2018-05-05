@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import { bindActionCreators } from 'redux';
-import BookShelfCard from '../BookShelfCard';
+import BookshelfCard from '../BookshelfCard';
 import { fetchFavorites, setBookCardPosition } from '../../actions/';
-
-// TODO
-// For saving: do auto-save every few seconds?
 
 class BookshelfContainer extends Component {
   constructor(props) {
     super(props);
-    this.moveCard = this.moveCard.bind(this);
+    if (props.editable) {
+      this.moveCard = this.moveCard.bind(this);
+    } else {
+      this.moveCard = null;
+    }
   }
 
   componentWillMount() {
@@ -49,13 +50,14 @@ class BookshelfContainer extends Component {
         <div className="row px-2">
           {
             books.map((book, i) => (
-            <BookShelfCard
+            <BookshelfCard
               key={book.data.id}
               index={i}
               id={book.data.id}
               title={book.data.volumeInfo.title}
               authors={book.data.volumeInfo.authors}
               moveCard={this.moveCard}
+              editable={this.props.editable}
             />
           ))
         }

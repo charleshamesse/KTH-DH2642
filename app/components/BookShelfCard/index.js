@@ -5,10 +5,6 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-const style = {
-  cursor: 'move',
-};
-
 const ItemTypes = {
   CARD: 'card',
 };
@@ -24,20 +20,22 @@ const cardSource = {
 
 const cardTarget = {
   hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
+    if (props.editable) { // Make it optional for profile display
+      const dragIndex = monitor.getItem().index;
+      const hoverIndex = props.index;
 
-    // Don't replace items with themselves
-    if (dragIndex === hoverIndex) {
-      return;
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      props.moveCard(dragIndex, hoverIndex);
+
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      monitor.getItem().index = hoverIndex;
     }
-    props.moveCard(dragIndex, hoverIndex);
-
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
-    // to avoid expensive index searches.
-    monitor.getItem().index = hoverIndex;
   },
 };
 
@@ -70,6 +68,10 @@ class BookshelfCard extends Component {
     } = this.props;
     const opacity = isDragging ? 0 : 1;
 
+    const style = {
+      cursor: this.props.editable ? 'move' : 'default',
+    };
+
     const content = (
       <div style={{ ...style, opacity }} className="col-md-2 p-1">
         <div className="card box-shadow">
@@ -83,7 +85,10 @@ class BookshelfCard extends Component {
         </div>
       </div>
     );
-    return connectDragSource(connectDropTarget(content));
+    if (this.props.editable) {
+      return connectDragSource(connectDropTarget(content));
+    }
+    return content;
   }
 }
 
