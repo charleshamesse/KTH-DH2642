@@ -37,15 +37,15 @@ const getAuthors = (authors) => {
 };
 
 const BookCard = ({
-  apiId, book, title, authors, isFavorite, favBookIds, auth, firebase,
+  apiId, book, title, authors, isFavorite, favBookIds, auth, firebase, noLink,
 }) => (
-  <div className="col-md-3 mb-3">
+  <div className={noLink ? 'col-md-12 mb-3' : 'col-md-3 mb-3'}>
     <div className="card box-shadow">
       <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
           <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={() => handleBookFavoriteClick(isFavorite, book, favBookIds, firebase, auth)} />
       </div>
-      <Link style={{ color: 'black' }} to={`/books/${apiId}`}>
-        <img className="card-img-top book-card-img" src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
+      <Link style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
+        <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
         <div className="card-body">
           <h4>{_.truncate(title)}</h4>
           <p className="card-text"><small className="text-muted">{_.truncate(getAuthors(authors))}</small></p>

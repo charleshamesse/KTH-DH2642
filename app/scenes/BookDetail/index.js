@@ -28,30 +28,36 @@ class BookDetail extends Component {
     document.getElementById('commentTextArea').placeholder = 'Write a comment...';
   }
 
-  renderBookDetail(isFavorite) {
+  renderBookDetail() {
     if (!this.props.loadingBook) {
       const favs = this.props.profile.favorites || [];
       const favBookIds = Object.keys(favs).map(k => favs[k]);
       const { book } = this.props;
-      const { authors } = book.volumeInfo;
+      const isFavorite = favBookIds.includes(book.id);
+      const { authors, title } = book.volumeInfo;
       const { saleInfo } = book;
       const isForSale = saleInfo.saleability === 'FOR_SALE';
       const buyLink = isForSale ? saleInfo.buyLink : '#';
       const price = isForSale ? `${saleInfo.listPrice.amount}  ${saleInfo.listPrice.currencyCode} ` : 'N/A ';
       return (
         <div className="row">
-          <div className="col-md-4 card bg-light">
-            <div className="card-body">
-              <h5 className="card-title">{book.volumeInfo.title}</h5>
-              <p className="card-text">{book.volumeInfo.subtitle}</p>
-            </div>
-            <img className="card-img" src={`https://books.google.com/books/content/images/frontcover/${book.id}?fife=w300-h450`} alt="Card image cap" />
-            <div className="card-body">
-              <p>Price: {price}</p>
-              {isForSale
-                ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>
-                : <span>Book not availabe for purcash.</span>}
-            </div>
+          <div>
+          <BookCard
+            apiId={book.id}
+            book={book}
+            title={title}
+            authors={authors || []}
+            isFavorite={isFavorite}
+            favBookIds={favBookIds}
+            auth={this.props.auth}
+            firebase={this.props.firebase}
+            noLink={true} />
+          <div>
+            <p>Price: {price}</p>
+            {isForSale
+              ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>
+              : <span>Book not availabe for purcash.</span>}
+          </div>
           </div>
           <div className="col-md-8">
             <h6>Authors</h6>
