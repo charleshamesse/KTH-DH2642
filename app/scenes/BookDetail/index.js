@@ -52,7 +52,7 @@ class BookDetail extends Component {
             auth={this.props.auth}
             firebase={this.props.firebase}
             noLink={true} />
-          <div>
+          <div id="book-price">
             <p>Price: {price}</p>
             {isForSale
               ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>

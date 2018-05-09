@@ -45,8 +45,13 @@ class Bookshelf extends Component {
             <div className="container">
               <div className="my-3 py-3">
                 <h2 className="display-5">Bookshelf</h2>
-                <p className="text-lead">Have your favorite books organized the way you want.</p>
-                <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
+                {this.props.profile.favorites
+                  ? <div>
+                      <p className="text-lead">Have your favorite books organized the way you want.</p>
+                      <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
+                    </div>
+                  : <p>Pick some books as favorites so that you can order them!</p>
+                  }
               </div>
           </div>
           );
@@ -88,7 +93,7 @@ const BookshelfWithFirebase = compose(
     state => ({
       profile: state.firebase.profile,
       auth: state.firebase.auth,
-      favorites: state.favorite,
+      // favorites: state.favorite || [],
     }),
     mapDispatchToProps,
   ),
