@@ -7,9 +7,14 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import BookshelfCard from '../../components/BookshelfCard';
 import BookshelfContainer from '../../components/BookshelfContainer';
-import { fetchFavorites } from '../../actions/';
+import { fetchFavorites, fetchProfile } from '../../actions/';
 
 class Profile extends Component {
+  componentDidMount() {
+    const profileIdFromURL = this.props.match.params.id;
+    this.props.fetchProfile(profileIdFromURL, this.props.firebase);
+  }
+
   renderFavorites(favorites) {
     // TODO if no favorites, display that
     // TODO remove book from favorites
@@ -40,41 +45,33 @@ class Profile extends Component {
 
 
   renderContent() {
-    if (isLoaded(this.props.auth)) {
-      if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
-        console.log(this.props.favorites);
-        return (
-                <div className="row flex-xl-nowrap my-3 py-3">
-                  <div className="col-md-4">
-                    <div className="card profile-card">
-                      <img className="rounded mx-auto d-block profile-card-image" width="50%" src={this.props.profile.avatarUrl} alt="Avatar" />
-                      <div className="card-body text-center">
-                        <h5 className="card-title">{this.props.profile.displayName}</h5>
-                      </div>
-                      <div className="card-body">
-                        <p className="card-text">
-                          <strong>Mail</strong><br />
-                          {this.props.profile.email}<br />
-                          <br />
-                          <strong>Activity</strong><br />
-                          {Object.keys(this.props.profile.favorites).length} favorite books
-                        </p>
-                      </div>
+    const { loadingProfile, profile } = this.props.profile;
+    if (!loadingProfile && !isEmpty(profile)) {
+      return (
+              <div className="row flex-xl-nowrap my-3 py-3">
+                <div className="col-md-4">
+                  <div className="card profile-card">
+                    <img className="rounded mx-auto d-block profile-card-image" width="50%" src={profile.avatarUrl} alt="Avatar" />
+                    <div className="card-body text-center">
+                      <h5 className="card-title">{profile.displayName}</h5>
+                    </div>
+                    <div className="card-body">
+                      <p className="card-text">
+                        <strong>Mail</strong><br />
+                        {profile.email}<br />
+                        <br />
+                        <strong>Activity</strong><br />
+                        {Object.keys(profile.favorites).length} favorite books
+                      </p>
                     </div>
                   </div>
-                  <div className="col-md-8">
-                  <h2>Favorites</h2>
-                    <BookshelfContainer bookIds={this.props.profile.favorites} editable={false} />
-                  </div>
                 </div>
-        );
-      } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
-        return ( // user is logged in
-          <div>
-              <Redirect to="/home"/>
-          </div>
-        );
-      }
+                <div className="col-md-8">
+                <h2>Favorites</h2>
+                  <BookshelfContainer bookIds={profile.favorites} editable={false} />
+                </div>
+              </div>
+      );
     }
     return (<LoadingSpinner />); // Auth not loaded
   }
@@ -82,23 +79,26 @@ class Profile extends Component {
   render() {
     return (
       <div className="container">
-        {this.renderContent()}
+        {this.props.match.params.id === 'undefined'
+        ? <Redirect to='/home' />
+        : this.renderContent()}
       </div>
     );
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchFavorites }, dispatch);
+  return bindActionCreators({ fetchProfile }, dispatch);
 }
 
 const ProfileWithFirebase = compose(
   firebaseConnect(),
   connect(
     state => ({
-      profile: state.firebase.profile,
+      profile: state.profileDetail,
       auth: state.firebase.auth,
       favorites: state.favorite,
+      // profileDetail: state.profileDetail,
     }),
     mapDispatchToProps,
   ),

@@ -10,8 +10,6 @@ const initialState = {
 
 
 export default function (state = initialState, action) {
-  // console.log('Book Detail. Action received:', action);
-
   switch (action.type) {
     case FETCH_BOOK + PENDING || FETCH_COMMENTS + PENDING:
       return { ...state, loadingBook: true, loadingComments: true };

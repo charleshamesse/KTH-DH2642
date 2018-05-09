@@ -17,9 +17,11 @@ class BookDetail extends Component {
     this.props.fetchComments(bookIdFromURL, this.props.firebase);
   }
 
-  uploadComment = (bookId, username, timestamp) => {
+  uploadComment = (bookId, username, userId, timestamp) => {
     const text = document.getElementById('commentTextArea').value;
-    this.props.comments.push({ text, username, timestamp });
+    this.props.comments.push({
+      text, username, userId, timestamp,
+    });
     this.props.firebase.database().ref(`bookComments/${bookId}`).update({
       comments: this.props.comments,
     });
@@ -76,10 +78,14 @@ class BookDetail extends Component {
             <br />
             <br />
             <div>
-              <CreateComment username={this.props.profile.displayName}
+              {this.props.auth.isEmpty
+              ? <strong>Log in to comment on books</strong>
+              : <CreateComment username={this.props.profile.displayName}
+                             userId={this.props.auth.uid}
                              bookId={this.props.book.id}
                              timestamp={new Date()}
                              uploadFunc={this.uploadComment} />
+              }
             </div>
           </div>
         </div>

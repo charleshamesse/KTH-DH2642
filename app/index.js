@@ -82,6 +82,7 @@ export default class App extends React.Component {
               <Route path="/login" component={Login} />
               <Route path="/bookshelf" component={Bookshelf} />
               <Route path="/profile" component={Profile} />
+              <Route path="/profiles/:id" component={Profile} />
               <Route path="/logout" component={Logout} />
               <Redirect to="/home"/>
             </Switch>

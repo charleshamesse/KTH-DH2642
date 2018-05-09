@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CommentCard from '../../components/CommentCard';
 
 const renderComments = (comments) => {
@@ -7,6 +6,7 @@ const renderComments = (comments) => {
     const arr = Object.keys(comments).map(k => comments[k]);
     const listItems = arr.map((comment, i) => <CommentCard key={i}
                                                           username={comment.username}
+                                                          userId={comment.userId}
                                                           commentText={comment.text} />);
     return (listItems);
   }

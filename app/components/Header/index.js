@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { fetchFavorites } from '../../actions';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import BookshelfContainer from '../../components/BookshelfContainer';
 
-const Header = () => (
-  <header>
+class Header extends Component {
+  render() {
+    const link = this.props.isEmpty ? '/home' : `/profiles/${this.props.auth.uid}`;
+    return (
+    <header>
     <nav className="navbar navbar-expand navbar-dark bg-secondary">
       <div id="wrapper" className="container-fluid">
         <div id="header-title">
@@ -24,7 +33,7 @@ const Header = () => (
                 My Account
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a className="dropdown-item" href="/profile">Profile</a>
+                <a className="dropdown-item" href={link}>Profile</a>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="/logout">Log out</a>
               </div>
@@ -34,6 +43,22 @@ const Header = () => (
       </div>
     </nav>
   </header>
-);
+    );
+  }
+}
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchFavorites }, dispatch);
+}
+
+const HeaderWithFirebase = compose(
+  firebaseConnect(),
+  connect(
+    state => ({
+      auth: state.firebase.auth,
+    }),
+    mapDispatchToProps,
+  ),
+)(Header);
+
+export default HeaderWithFirebase;
