@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_BOOKS, FETCH_MORE_BOOKS, FULFILLED, PENDING } from '../actions';
+import { FETCH_BOOKS, FETCH_MORE_BOOKS, FULFILLED, PENDING, REJECTED } from '../actions';
 
 const initialState = {
   searchString: '',
@@ -7,12 +7,13 @@ const initialState = {
   loading: true,
   books: [],
   nextIndex: 0,
+  error: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCH_BOOKS + PENDING:
-      return { ...state, loading: true };
+      return { ...state, loading: true, error: false };
 
     case FETCH_BOOKS + FULFILLED: {
       const books = _.mapKeys(action.payload.data.items, 'id');
@@ -25,11 +26,15 @@ export default function (state = initialState, action) {
         nextIndex,
         searchString: state.searchString,
         searchCategory: state.searchCategory,
+        error: false,
       };
     }
 
+    case FETCH_BOOKS + REJECTED:
+      return { ...state, loading: false, error: true };
+
     case FETCH_MORE_BOOKS + PENDING: {
-      return { ...state, loading: true };
+      return { ...state, loading: true, error: false };
     }
 
     case FETCH_MORE_BOOKS + FULFILLED: {
@@ -51,9 +56,13 @@ export default function (state = initialState, action) {
         totalBooks: action.payload.data.totalItems,
         books: allBooks,
         nextIndex,
+        error: false,
       };
     }
 
+    case FETCH_MORE_BOOKS + REJECTED: {
+      return { ...state, loading: false, error: true };
+    }
 
     default: {
       return state;

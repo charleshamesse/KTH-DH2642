@@ -20,6 +20,7 @@ export const FETCH_PROFILE = 'FETCH_PROFILE';
 // Promise actions dispatch pending actions and then fulfilled/rejected actions.
 export const FULFILLED = '_FULFILLED';
 export const PENDING = '_PENDING';
+export const REJECTED = '_REJECTED';
 
 // Action creators
 // Search

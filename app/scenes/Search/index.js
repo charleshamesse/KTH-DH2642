@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchBooks, fetchMoreBooks } from '../../actions';
 import BookCard from '../../components/BookCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import ErrorMessage from '../../components/ErrorMessage';
 
 class Search extends Component {
   constructor(props) {
@@ -70,19 +71,24 @@ class Search extends Component {
 
   renderBookCardContainer() {
     // Renders the InfiniteScroll container
+    if (!this.props.error) {
+      return (
+        <InfiniteScroll
+          dataLength={Object.keys(this.props.books).length}
+          next={this.fetchMoreBooks}
+          hasMore={this.hasMore()}
+          loader={<div className="col-md-3"><LoadingSpinner/></div>}
+          endMessage={<div className="row p-4">{'That\'s all we could find!'}</div>}
+          style={{ overflowY: 'hidden' }}
+          >
+          <div className="row">
+            {this.renderBookCards()}
+          </div>
+        </InfiniteScroll>
+      );
+    }
     return (
-      <InfiniteScroll
-        dataLength={Object.keys(this.props.books).length}
-        next={this.fetchMoreBooks}
-        hasMore={this.hasMore()}
-        loader={<div className="col-md-3"><LoadingSpinner/></div>}
-        endMessage={<div className="row p-4">{'That\'s all we could find!'}</div>}
-        style={{ overflowY: 'hidden' }}
-        >
-        <div className="row">
-          {this.renderBookCards()}
-        </div>
-      </InfiniteScroll>
+      <ErrorMessage />
     );
   }
 
@@ -92,14 +98,14 @@ class Search extends Component {
       if (Object.keys(this.props.books).length > 0) {
         return (
             <div className="container">
-              <div className="my-3 py-3">
+              <div className="mt-3 py-3">
                 <h2 className="display-5">Results ({Object.keys(this.props.books).length} / {this.props.totalBooks})</h2>
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
               <div className="book-results-container">
                 {
-                  this.props.profile ? this.renderBookCardContainer() : 'Loading'
+                  this.props.profile ? this.renderBookCardContainer() : '<LoadingSpinner/>'
                 }
               </div>
             </div>
@@ -157,6 +163,7 @@ const SearchWithFirebase = compose(
     state => ({
       books: state.search.books,
       totalBooks: state.search.totalBooks,
+      error: state.search.error,
       loading: state.search.loading,
       nextIndex: state.search.nextIndex,
       profile: state.firebase.profile,

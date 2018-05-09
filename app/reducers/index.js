@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
 
-import BooksReducer from './BookReducer';
 import BookDetailReducer from './BookDetailReducer';
 import SearchReducer from './SearchReducer';
 import FavoriteReducer from './FavoriteReducer';
