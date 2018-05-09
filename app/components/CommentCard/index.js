@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CommentCard = ({ commentText, username, userId }) => (
-  <div className="card row">
+  <div className="card mb-3">
     <Link style={{ color: 'black' }} to={`/profiles/${userId}`}>
       <div className="card-header">
         <strong>{username}</strong>

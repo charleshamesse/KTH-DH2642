@@ -10,7 +10,7 @@ const renderComments = (comments) => {
                                                           commentText={comment.text} />);
     return (listItems);
   }
-  return (<h4>No comments for this book yet.</h4>);
+  return (<p>No comments for this book yet.</p>);
 };
 
 const CommentList = ({ comments }) => (

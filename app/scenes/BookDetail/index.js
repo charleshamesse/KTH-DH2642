@@ -70,13 +70,10 @@ class BookDetail extends Component {
             }
             <p dangerouslySetInnerHTML={{ __html: book.volumeInfo.description }}>
             </p>
-            <div>
+            <h6>Comments</h6>
               {!this.props.loadingComments
                 ? <CommentList comments={this.props.comments} />
                 : <LoadingSpinner/>}
-            </div>
-            <br />
-            <br />
             <div>
               {this.props.auth.isEmpty
               ? <strong>Log in to comment on books</strong>
