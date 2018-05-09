@@ -56,7 +56,7 @@ class BookDetail extends Component {
             <p>Price: {price}</p>
             {isForSale
               ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>
-              : <span>Book not availabe for purcash.</span>}
+              : <span>Book not availabe for purchase.</span>}
           </div>
           </div>
           <div className="col-md-8">
