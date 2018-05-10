@@ -5,7 +5,6 @@ import BookDetailReducer from './BookDetailReducer';
 import SearchReducer from './SearchReducer';
 import FavoriteReducer from './FavoriteReducer';
 import ProfileDetailReducer from './ProfileDetailReducer';
-import AuthReducer from './AuthReducer';
 
 const rootReducer = combineReducers({
   search: SearchReducer,

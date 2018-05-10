@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators, compose } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { fetchFavorites } from '../../actions';
+import { fetchFavorites, updateFavorites } from '../../actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import BookshelfContainer from '../../components/BookshelfContainer';
 
@@ -13,25 +13,8 @@ class Bookshelf extends Component {
     this.updateFavorites = this.updateFavorites.bind(this);
   }
 
-  componentDidMount() {
-    // this.props.fetchFavorites();
-  }
-
-  fetchFavoritesIfNeeded() {
-    /*
-    if (!this.props.favorites.loading) {
-      console.log('loading fav');
-      this.props.fetchFavorites(this.props.profile.favorites);
-    }
-    return this.props.favorites;
-    */
-    return true;
-  }
-
   updateFavorites(favorites) {
-    this.props.firebase.database().ref(`users/${this.props.auth.uid}`).update({
-      favorites,
-    });
+    this.props.updateFavorites(this.props.firebase, this.props.auth.uid, favorites);
   }
 
   renderContent() {
@@ -39,25 +22,19 @@ class Bookshelf extends Component {
     if (isLoaded(this.props.auth)) {
       // When auth is loaded and not empty
       if (isLoaded(this.props.profile) && !isEmpty(this.props.profile)) {
-        // When favorites are loaded, display content
-        if (this.fetchFavoritesIfNeeded()) {
-          return (
-            <div className="container">
-              <div className="my-3 py-3">
-                <h2 className="display-5">Bookshelf</h2>
+        return (
+          <div className="container">
+            <div className="my-3 py-3">
+              <h2 className="display-5">Bookshelf</h2>
                 {this.props.profile.favorites
                   ? <div>
                       <p className="text-lead">Have your favorite books organized the way you want.</p>
                       <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
                     </div>
                   : <p>Pick some books as favorites so that you can order them!</p>
-                  }
-              </div>
+                }
+            </div>
           </div>
-          );
-        }
-        return (
-          <LoadingSpinner />
         );
       } else if (isLoaded(this.props.profile) && isEmpty(this.props.profile)) {
         return ( // user is logged in
@@ -83,18 +60,21 @@ class Bookshelf extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    profile: state.firebase.profile,
+    auth: state.firebase.auth,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchFavorites }, dispatch);
+  return bindActionCreators({ fetchFavorites, updateFavorites }, dispatch);
 }
 
 const BookshelfWithFirebase = compose(
   firebaseConnect(),
   connect(
-    state => ({
-      profile: state.firebase.profile,
-      auth: state.firebase.auth,
-      // favorites: state.favorite || [],
-    }),
+    mapStateToProps,
     mapDispatchToProps,
   ),
 )(Bookshelf);

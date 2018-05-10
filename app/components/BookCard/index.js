@@ -1,58 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
+import { bindActionCreators, compose } from 'redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import * as solidHeart from '@fortawesome/fontawesome-free-solid/faHeart';
 import * as emptyHeart from '@fortawesome/fontawesome-free-regular/faHeart';
+import { updateFavorites } from '../../actions/';
 
-
-const addBookToFavorites = (book, favBooks, firebase, auth) => {
-  favBooks.push(book.id);
-  firebase.database().ref(`users/${auth.uid}`).update({
-    favorites: favBooks,
-  });
-};
-
-const removeBookFromFavorites = (book, favBooks, firebase, auth) => {
-  const index = favBooks.indexOf(book.id);
-  if (index !== -1) favBooks.splice(index, 1);
-  firebase.database().ref(`users/${auth.uid}`).update({
-    favorites: favBooks,
-  });
-};
-
-const handleBookFavoriteClick = (isFavorite, book, favBookIds, firebase, auth) => {
-  auth.isEmpty && window.location.replace('/login'); // user not logged in, redirect to login
-
-  isFavorite ?
-    removeBookFromFavorites(book, favBookIds, firebase, auth)
-    : addBookToFavorites(book, favBookIds, firebase, auth);
-};
-
-const getAuthors = (authors) => {
-  if (authors) {
-    return authors.join(', ');
+class BookCard extends Component {
+  addBookToFavorites = (book, favorites) => {
+    favorites.push(book.id);
+    this.props.updateFavorites(this.props.firebase, this.props.auth.uid, favorites);
   }
-  return '';
-};
 
-const BookCard = ({
-  apiId, book, title, authors, isFavorite, favBookIds, auth, firebase, noLink,
-}) => (
-  <div className={noLink ? 'col-md-12 mb-3' : 'col-md-3 mb-3'}>
-    <div className="card box-shadow">
-      <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
-          <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={() => handleBookFavoriteClick(isFavorite, book, favBookIds, firebase, auth)} />
-      </div>
-      <Link style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
-        <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
-        <div className="card-body">
-          <h4>{_.truncate(title)}</h4>
-          <p className="card-text"><small className="text-muted">{_.truncate(getAuthors(authors))}</small></p>
+  removeBookFromFavorites = (book, favorites) => {
+    const index = favorites.indexOf(book.id);
+    if (index !== -1) favorites.splice(index, 1);
+    this.props.updateFavorites(this.props.firebase, this.props.auth.uid, favorites);
+  }
+
+  handleBookFavoriteClick = (isFavorite, book, favBookIds) => {
+    this.props.auth.isEmpty && window.location.replace('/login'); // user not logged in, redirect to login
+
+    isFavorite
+      ? this.removeBookFromFavorites(book, favBookIds)
+      : this.addBookToFavorites(book, favBookIds);
+  }
+
+  getAuthors = (authors) => {
+    if (authors) {
+      return authors.join(', ');
+    }
+    return '';
+  }
+
+  render() {
+    const {
+      apiId, book, title, authors, isFavorite, favBookIds, noLink,
+    } = this.props;
+
+    return (
+      <div className={noLink ? 'col-md-12 mb-3' : 'col-md-3 mb-3'}>
+        <div className="card box-shadow">
+          <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
+              <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)} />
+          </div>
+          <Link style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
+            <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
+            <div className="card-body">
+              <h4>{_.truncate(title)}</h4>
+              <p className="card-text"><small className="text-muted">{_.truncate(this.getAuthors(authors))}</small></p>
+            </div>
+          </Link>
         </div>
-      </Link>
-    </div>
-  </div>
-);
+      </div>
+    );
+  }
+}
 
-export default BookCard;
+function mapStateToProps(state) {
+  return {
+    auth: state.firebase.auth,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ updateFavorites }, dispatch);
+}
+
+export default compose(
+  firebaseConnect(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(BookCard);

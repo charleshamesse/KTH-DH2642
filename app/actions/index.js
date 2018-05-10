@@ -9,10 +9,12 @@ const RESULTS_PER_PAGE = 8;
 
 // Action names
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const FETCH_BOOKS = 'FETCH_BOOKS';
 export const FETCH_MORE_BOOKS = 'FETCH_MORE_BOOKS';
 export const FETCH_BOOK = 'FETCH_BOOK';
 export const FETCH_FAVORITES = 'FETCH_FAVORITES';
+export const UPDATE_FAVORITES = 'UPDATE_FAVORITES';
 export const MOVE_BOOKCARD = 'MOVE_BOOKCARD';
 export const FETCH_PROFILE = 'FETCH_PROFILE';
 export const LOGIN = 'LOGIN';
@@ -95,6 +97,14 @@ export function fetchBook(bookId) {
   };
 }
 
+export function updateComments(bookId, comments, firebase) {
+  const request = firebase.database().ref(`bookComments/${bookId}`).update({ comments });
+  return {
+    type: UPDATE_COMMENTS,
+    payload: request,
+  };
+}
+
 // Bookshelf
 export function fetchFavorites(favorites) {
   const promises = Object.keys(favorites).map((favoriteKey) => {
@@ -117,6 +127,17 @@ export function fetchFavorites(favorites) {
     payload: promise,
   };
 }
+
+export function updateFavorites(firebase, uid, favorites) {
+  const request = firebase.database().ref(`users/${uid}`).update({
+    favorites,
+  });
+  return {
+    type: UPDATE_FAVORITES,
+    payload: request,
+  };
+}
+
 
 export const setBookCardPosition = (dragIndex, hoverIndex) => ({
   type: MOVE_BOOKCARD,

@@ -3,7 +3,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { fetchBook, fetchComments } from '../../actions';
+import { fetchBook, fetchComments, updateComments } from '../../actions';
 import BookCard from '../../components/BookCard';
 import CreateComment from '../../components/CreateComment';
 import CommentList from '../../components/CommentList';
@@ -18,14 +18,17 @@ class BookDetail extends Component {
   }
 
   uploadComment = (bookId, username, userId, timestamp) => {
+    // Update comments in component
     const text = document.getElementById('commentTextArea').value;
     this.props.comments.push({
       text, username, userId, timestamp,
     });
-    this.props.firebase.database().ref(`bookComments/${bookId}`).update({
-      comments: this.props.comments,
-    });
+
+    // API calls
+    this.props.updateComments(bookId, this.props.comments, this.props.firebase);
     this.props.fetchComments(bookId, this.props.firebase);
+
+    // Reset form
     document.getElementById('commentTextArea').value = '';
     document.getElementById('commentTextArea').placeholder = 'Write a comment...';
   }
@@ -111,7 +114,7 @@ class BookDetail extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchBook, fetchComments }, dispatch);
+  return bindActionCreators({ fetchBook, fetchComments, updateComments }, dispatch);
 }
 
 const BookDetailWithFirebase = compose(
