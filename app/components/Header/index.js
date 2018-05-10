@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { fetchFavorites } from '../../actions';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import BookshelfContainer from '../../components/BookshelfContainer';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import * as book from '@fortawesome/fontawesome-free-brands/faReadme';
 
 class Header extends Component {
   render() {
@@ -15,7 +14,10 @@ class Header extends Component {
     <nav className="navbar navbar-expand navbar-dark bg-secondary">
       <div id="wrapper" className="container-fluid">
         <div id="header-title">
-          <Link to="/home" className="navbar-brand">G. Readmore</Link>
+          <Link to="/home" className="navbar-brand">
+            <FontAwesomeIcon size="lg" color="white" icon={book} />&nbsp;
+            G. Readmore
+          </Link>
         </div>
         <div id="navbarNavDropdown">
           <ul className="navbar-nav">
@@ -48,7 +50,7 @@ class Header extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchFavorites }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 const HeaderWithFirebase = compose(
