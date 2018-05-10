@@ -16,7 +16,6 @@ import Introduction from './scenes/Introduction';
 import Login from './scenes/Login';
 import Logout from './scenes/Logout';
 import Search from './scenes/Search';
-import Recommendations from './scenes/Recommendations';
 import Bookshelf from './scenes/Bookshelf';
 import Profile from './scenes/Profile';
 import BookDetail from './scenes/BookDetail';
