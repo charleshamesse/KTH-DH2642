@@ -21,6 +21,7 @@ export default function (state = initialState, action) {
         ...state,
         loadingProfile: false,
         profile,
+        error: false,
       };
     }
 

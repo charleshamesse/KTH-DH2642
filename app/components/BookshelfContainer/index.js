@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import { bindActionCreators } from 'redux';
-import BookshelfCard from '../BookshelfCard';
 import { fetchFavorites, setBookCardPosition } from '../../actions/';
+import BookshelfCard from '../BookshelfCard';
+import ErrorMessage from '../ErrorMessage';
+import LoadingSpinner from '../LoadingSpinner';
 
 class BookshelfContainer extends Component {
   constructor(props) {
     super(props);
+
+    // This component is used in a drag-and-drop and a static situation
     if (props.editable) {
       this.moveCard = this.moveCard.bind(this);
     } else {
@@ -17,52 +21,49 @@ class BookshelfContainer extends Component {
   }
 
   componentWillMount() {
-    console.log('cwm');
-    console.log(this.props);
+    // It receives the ids of the books to load as props, calls the API the get these books
     this.props.fetchFavorites(this.props.bookIds);
   }
 
   moveCard(dragIndex, hoverIndex) {
+    // Card reordering is implemented using redux
     this.props.setBookCardPosition(dragIndex, hoverIndex);
-    console.log('update');
 
-    // Newly ordered favorites in array
+    // Here are the newly ordered favorites in array
     const updatedFavoritesArray = this.props.favorites.books.map(bookData => bookData.data.id);
 
-    // Make a dict out of it
+    // Make a dict with it and update
     const updatedFavoritesDict = {};
     updatedFavoritesArray.forEach((fav, index) => {
       updatedFavoritesDict[index] = fav;
     });
-
-    console.log(updatedFavoritesDict);
     this.props.updateFavoritesFunc(updatedFavoritesDict);
   }
 
   render() {
-    // const { books } = this.props;
-    console.log('render');
-    console.log(this.props.favorites);
     if (this.props.favorites) {
-      const { books } = this.props.favorites;
-      console.log(books);
-      return (
-        <div className="row px-2">
-          {
-            books.map((book, i) => (
-            <BookshelfCard
-              key={book.data.id}
-              index={i}
-              id={book.data.id}
-              title={book.data.volumeInfo.title}
-              authors={book.data.volumeInfo.authors}
-              moveCard={this.moveCard}
-              editable={this.props.editable}
-            />
-          ))
-        }
-        </div>
-      );
+      const { books, error } = this.props.favorites;
+      console.log(error);
+      if (!error) {
+        return (
+          <div className="row px-2">
+            {
+              books.map((book, i) => (
+              <BookshelfCard
+                key={book.data.id}
+                index={i}
+                id={book.data.id}
+                title={book.data.volumeInfo.title}
+                authors={book.data.volumeInfo.authors}
+                moveCard={this.moveCard}
+                editable={this.props.editable}
+              />
+            ))
+          }
+          </div>
+        );
+      }
+      return (<ErrorMessage />);
     }
     return (
       <div>Loading..</div>

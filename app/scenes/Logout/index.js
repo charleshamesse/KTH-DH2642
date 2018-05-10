@@ -5,18 +5,23 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 class Logout extends Component {
   componentDidMount() {
-    this.props.firebase.logout();
+    this.props.firebase.logout().then((res) => {
+      console.log('Then');
+      console.log(res);
+    }).catch((error) => {
+      console.log('Logout error');
+    });
   }
 
   render() {
     return (
-            <section className="jumbotron text-center">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 text-center">{"You're out."}</div>
-                    </div>
-                </div>
-            </section>
+      <section className="jumbotron text-center">
+          <div className="container">
+              <div className="row">
+                  <div className="col-md-12 text-center">{"You're out."}</div>
+              </div>
+          </div>
+      </section>
     );
   }
 }
@@ -32,7 +37,7 @@ function mapDispatchToProps(dispatch) {
 const LogoutWithFirebase = compose(
   firebaseConnect(),
   connect(state => ({
-    profile: state.firebase.profile, // load profile
+    profile: state.firebase.profile,
   })),
 )(Logout);
 

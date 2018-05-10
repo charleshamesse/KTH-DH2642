@@ -21,6 +21,7 @@ export default function (state = initialState, action) {
         ...state,
         loadingBook: false,
         book: action.payload.data,
+        errorBook: false,
       };
     }
     case FETCH_COMMENTS + FULFILLED: {
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         loadingComments: false,
         comments,
+        errorComments: false,
       };
     }
 

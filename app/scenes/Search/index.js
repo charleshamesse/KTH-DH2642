@@ -151,7 +151,6 @@ class Search extends Component {
   }
 }
 
-
 // Redux and firebase bindings
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchBooks, fetchMoreBooks }, dispatch);
