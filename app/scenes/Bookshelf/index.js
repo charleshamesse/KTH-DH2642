@@ -25,7 +25,16 @@ class Bookshelf extends Component {
         return (
           <div className="container">
             <div className="my-3 py-3">
-              <h2 className="display-5">Bookshelf</h2>
+              <h2 className="display-5">
+                Bookshelf
+                {
+                  // This makes sure we already display the persisted favorites with a spinner
+                  // and update with the correct ones whenever it's ready
+                  this.props.favorites.loading
+                    ? <LoadingSpinner inline={true} />
+                    : ''
+                }
+              </h2>
                 {this.props.profile.favorites
                   ? <div>
                       <p className="text-lead">Have your favorite books organized the way you want.</p>
@@ -64,6 +73,7 @@ function mapStateToProps(state) {
   return {
     profile: state.firebase.profile,
     auth: state.firebase.auth,
+    favorites: state.favorite,
   };
 }
 

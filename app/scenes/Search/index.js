@@ -60,8 +60,7 @@ class Search extends Component {
         return (
           <BookCard key={book.id} apiId={book.id} book={book}
             title={book.volumeInfo.title} authors={book.volumeInfo.authors}
-            isFavorite={isFavorite} favBookIds={favBookIds} auth={this.props.auth}
-            firebase={this.props.firebase}
+            isFavorite={isFavorite} favBookIds={favBookIds}
           />
         );
       }

@@ -43,7 +43,6 @@ class BookshelfContainer extends Component {
   render() {
     if (this.props.favorites) {
       const { books, error } = this.props.favorites;
-      console.log(error);
       if (!error) {
         return (
           <div className="row px-2">
@@ -66,7 +65,7 @@ class BookshelfContainer extends Component {
       return (<ErrorMessage />);
     }
     return (
-      <div>Loading..</div>
+      <LoadingSpinner />
     );
   }
 }

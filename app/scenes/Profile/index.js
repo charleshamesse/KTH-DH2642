@@ -40,7 +40,16 @@ class Profile extends Component {
                     </div>
                   </div>
                   <div className="col-md-8">
-                  <h2>Favorites</h2>
+                  <h2>
+                    Favorites
+                    {
+                      // This makes sure we already display the persisted favorites with a spinner
+                      // and update with the correct ones whenever it's ready
+                      this.props.favorites.loading
+                        ? <LoadingSpinner inline={true} />
+                        : ''
+                    }
+                  </h2>
                     <BookshelfContainer bookIds={profile.favorites} editable={false} />
                   </div>
                 </div>
