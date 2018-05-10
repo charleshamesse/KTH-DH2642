@@ -127,7 +127,7 @@ class Search extends Component {
         <div className="row flex-xl-nowrap">
           <div className="col-sm-4 offset-sm-4 below-nav">
             <h2>Search</h2>
-            <form class="form-group row">
+            <form className="form-group row">
               <div className="col-md-6">
                 <input id="search-input" className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
               </div>

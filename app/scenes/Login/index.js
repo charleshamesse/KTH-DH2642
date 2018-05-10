@@ -7,6 +7,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import * as googleIcon from '@fortawesome/fontawesome-free-brands/faGoogle';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { login } from '../../actions/';
 
 
 class Login extends Component {
@@ -16,8 +17,8 @@ class Login extends Component {
     } else if (isEmpty(this.props.auth) && isLoaded(this.props.auth)) { // user not logged in
       return (
               <button // <GoogleButton/> button can be used instead
-                  className="btn btn-large btn-outline-secondary"
-                  onClick={() => this.props.firebase.login({ provider: 'google', type: 'popup' })}
+                className="btn btn-large btn-outline-secondary"
+                onClick={() => this.props.login(this.props.firebase)}
               >
                 <FontAwesomeIcon icon={googleIcon} />&nbsp;
                 Sign in with Google
@@ -48,21 +49,14 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    // auth: state.auth,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ login }, dispatch);
 }
-
-
-// Login.propTypes = {
-//   firebase: PropTypes.shape({
-//     login: PropTypes.func.isRequired,
-//   }),
-//   auth: PropTypes.object,
-// };
-
 
 const LoginWithFirebase = compose(
   firebaseConnect(), // withFirebase can also be used
