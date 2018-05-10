@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import { FETCH_FAVORITES, MOVE_BOOKCARD, FULFILLED, PENDING } from '../actions';
+import { FETCH_FAVORITES, MOVE_BOOKCARD, FULFILLED, PENDING, REJECTED } from '../actions';
 
 const initialState = {
   books: [],
   loading: false,
+  error: false,
 };
 
 
@@ -12,14 +13,12 @@ export default function (state = initialState, action) {
 
   switch (action.type) {
     case FETCH_FAVORITES + PENDING:
-      console.log('fetch fav p');
       return { ...state, loading: true };
 
     case FETCH_FAVORITES + FULFILLED: {
-      console.log('fetch fav ff');
-      console.log(action.payload);
-
+      // Get the book order and API results
       const { order, data } = action.payload;
+      // Order the API results
       const books = order.map(key => _.filter(data, {
         data: {
           id: key,
@@ -29,9 +28,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        books, // : action.payload.data, // .data,
+        books,
       };
     }
+
+    case FETCH_FAVORITES + REJECTED:
+      return { ...state, loading: false, error: true };
 
     case MOVE_BOOKCARD: {
       // Get all needed indices and cards for replacement

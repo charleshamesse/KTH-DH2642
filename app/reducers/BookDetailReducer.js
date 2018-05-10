@@ -1,10 +1,12 @@
 import _ from 'lodash';
-import { FETCH_BOOK, FULFILLED, PENDING, FETCH_COMMENTS } from '../actions';
+import { FETCH_BOOK, FETCH_COMMENTS, FULFILLED, PENDING, REJECTED } from '../actions';
 
 const initialState = {
   book: {},
   loadingBook: true,
   loadingComments: true,
+  errorBook: false,
+  errorComments: false,
   comments: [],
 };
 
@@ -30,6 +32,13 @@ export default function (state = initialState, action) {
         comments,
       };
     }
+
+    case FETCH_BOOK + REJECTED:
+      return { ...state, loadingBook: false, errorBook: true };
+
+    case FETCH_COMMENTS + REJECTED:
+      return { ...state, loadingComments: false, errorComments: true };
+
     default: {
       return state;
     }

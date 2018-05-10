@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import { FETCH_PROFILE, FULFILLED, PENDING, FETCH_COMMENTS } from '../actions';
+import { FETCH_PROFILE, FULFILLED, PENDING, REJECTED } from '../actions';
 
 const initialState = {
   profile: {},
   loadingProfile: true,
+  error: false,
 };
 
 
@@ -22,6 +23,10 @@ export default function (state = initialState, action) {
         profile,
       };
     }
+
+    case FETCH_PROFILE + REJECTED:
+      return { ...state, loadingProfile: false, error: true };
+
     default: {
       return state;
     }
