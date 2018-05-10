@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import * as googleIcon from '@fortawesome/fontawesome-free-brands/faGoogle';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 
@@ -16,7 +18,10 @@ class Login extends Component {
               <button // <GoogleButton/> button can be used instead
                   className="btn btn-large btn-outline-secondary"
                   onClick={() => this.props.firebase.login({ provider: 'google', type: 'popup' })}
-              >Login With Google</button>
+              >
+                <FontAwesomeIcon icon={googleIcon} />&nbsp;
+                Sign in with Google
+              </button>
       );
     }
     // user is logged in
@@ -25,11 +30,15 @@ class Login extends Component {
 
   render() {
     return (
-        <section className="jumbotron text-center">
+        <section className="jumbotron">
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        { this.renderLoginResponse() }
+                        <h2>Sign in</h2>
+                        Currently, we only support authentication with Google.
+                        <div className="text-center mt-3">
+                          { this.renderLoginResponse() }
+                        </div>
                     </div>
                 </div>
             </div>

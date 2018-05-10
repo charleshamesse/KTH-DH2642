@@ -116,7 +116,7 @@ class Search extends Component {
       );
     }
     return (
-      <div id='search-helper'>Search for any book you want..</div>
+      <div id='search-helper' className="my-5">Search for any book you want..</div>
     );
   }
 
@@ -125,18 +125,20 @@ class Search extends Component {
     return (
       <div className="container-fluid">
         <div className="row flex-xl-nowrap">
-          <div className="col-md-4 offset-md-4 below-nav">
+          <div className="col-sm-4 offset-sm-4 below-nav">
             <h2>Search</h2>
-            <form id="this-is-form-id">
-              <input id="search-input" className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
-              <div className="form-group">
-                <label htmlFor="exampleFormControlSelect2">Search in:</label>
-                <select value={this.props.searchData.searchCategory} id="search-categories" onChange={this.handleChange} className="form-control">
-                  <option value="intitle">Book Titles</option>
-                  <option value="inauthor" >Author names</option>
-                  <option value="subject">Subject text</option>
-                  <option value="isbn">ISBN</option>
-                </select>
+            <form class="form-group row">
+              <div className="col-md-6">
+                <input id="search-input" className="form-control" onChange={this.handleChange} value={this.props.searchData.searchString} />
+              </div>
+              <label className="col-form-label col-md-1">in</label>
+              <div className="col-md-5">
+                  <select value={this.props.searchData.searchCategory} id="search-categories" onChange={this.handleChange} className="form-control">
+                    <option value="intitle">Book titles</option>
+                    <option value="inauthor" >Author names</option>
+                    <option value="subject">Subject text</option>
+                    <option value="isbn">ISBN</option>
+                  </select>
               </div>
             </form>
           </div>
