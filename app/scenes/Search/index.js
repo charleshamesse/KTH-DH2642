@@ -40,7 +40,7 @@ class Search extends Component {
 
   fetchMoreBooks() {
     // Does the search when loading more, called in the InfiniteScroll component
-    return this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.nextIndex);
+    return this.props.fetchMoreBooks(this.props.searchData.searchString, this.props.searchData.searchCategory, this.props.nextIndex);
   }
 
   hasMore() {
@@ -134,8 +134,9 @@ class Search extends Component {
               <div className="col-md-5">
                   <select value={this.props.searchData.searchCategory} id="search-categories" onChange={this.handleChange} className="form-control">
                     <option value="intitle">Book titles</option>
-                    <option value="inauthor" >Author names</option>
-                    <option value="subject">Subject text</option>
+                    <option value="inauthor" >Authors</option>
+                    <option value="inpublisher">Publishers</option>
+                    <option value="subject">Categories</option>
                     <option value="isbn">ISBN</option>
                   </select>
               </div>

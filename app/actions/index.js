@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-// We should create an axios instance for this
-const API_KEY = 'AIzaSyBw6VF7mra0jufF209HhB-83lJBE4_uibk';
-const ROOT_URL = 'https://www.googleapis.com/books/v1/';
-const ROOT_URL_SEARCH = `${ROOT_URL}volumes?key=${API_KEY}`;
-const ROOT_URL_GET = `${ROOT_URL}volumes/`;
 const RESULTS_PER_PAGE = 8;
+const ROOT_URL = 'https://www.googleapis.com/books/v1/';
+const API_KEY = 'AIzaSyBw6VF7mra0jufF209HhB-83lJBE4_uibk';
+
+const instance = axios.create({
+  baseURL: ROOT_URL,
+  params: {
+    maxResults: RESULTS_PER_PAGE,
+    key: API_KEY,
+  },
+});
 
 // Action names
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
@@ -45,17 +50,25 @@ export function logout(firebase) {
 
 // Search
 export function fetchBooks(queryString, type) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString}+${type}:${queryString || '*'}&maxResults=${RESULTS_PER_PAGE}`;
-  const request = axios.get(url);// .then(response => response.data.items);
+  const request = instance.get('/volumes', {
+    params: {
+      q: `${queryString}+${type}:${queryString || '*'}`,
+    },
+  });
+
   return {
     type: FETCH_BOOKS,
     payload: request,
   };
 }
 
-export function fetchMoreBooks(queryString, nextIndex) {
-  const url = `${ROOT_URL_SEARCH}&q=${queryString || '*'}&maxResults=${RESULTS_PER_PAGE}&startIndex=${nextIndex}`;
-  const request = axios.get(url);
+export function fetchMoreBooks(queryString, type, nextIndex) {
+  const request = instance.get('/volumes', {
+    params: {
+      q: `${queryString}+${type}:${queryString || '*'}`,
+      startIndex: nextIndex,
+    },
+  });
 
   return {
     type: FETCH_MORE_BOOKS,
@@ -88,8 +101,7 @@ export function fetchComments(bookId, firebase) {
 }
 
 export function fetchBook(bookId) {
-  const url = `${ROOT_URL_GET}${bookId}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
-  const request = axios.get(url);// .then(response => response.data.items);
+  const request = instance.get(`volumes/${bookId}`);
 
   return {
     type: FETCH_BOOK,
@@ -108,9 +120,8 @@ export function updateComments(bookId, comments, firebase) {
 // Bookshelf
 export function fetchFavorites(favorites) {
   const promises = Object.keys(favorites).map((favoriteKey) => {
-    const favorite = favorites[favoriteKey];
-    const url = `${ROOT_URL_GET}${favorite}?key=${API_KEY}`;// Seems like API KEY is not needed here? &key=${API_KEY}`;
-    const request = axios.get(url);// .then(response => response.data.items);
+    const favoriteId = favorites[favoriteKey];
+    const request = instance.get(`volumes/${favoriteId}`);
     return request;
   });
 
