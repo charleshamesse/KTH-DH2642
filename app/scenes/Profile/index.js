@@ -23,7 +23,7 @@ class Profile extends Component {
         return (
                 <div className="row flex-xl-nowrap my-3 py-3">
                   <div className="col-md-4">
-                    <div className="card profile-card">
+                    <div className="card profile-card mb-3">
                       <img className="rounded mx-auto d-block profile-card-image" width="50%" src={profile.avatarUrl} alt="Avatar" />
                       <div className="card-body text-center">
                         <h5 className="card-title">{profile.displayName}</h5>
