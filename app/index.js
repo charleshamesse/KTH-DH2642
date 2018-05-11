@@ -19,9 +19,8 @@ import Search from './scenes/Search';
 import Bookshelf from './scenes/Bookshelf';
 import Profile from './scenes/Profile';
 import BookDetail from './scenes/BookDetail';
-
-
 import rootReducer from './reducers';
+import { firebaseConfig } from './config';
 
 import './custom.scss';
 
@@ -31,15 +30,6 @@ const persistConfig = {
 };
 
 const reducers = persistReducer(persistConfig, rootReducer);
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyCIEdAaHlo6AiAjxpvxfQ4OlvHKba7sZWw',
-  authDomain: 'kth-dh2642-books.firebaseapp.com',
-  databaseURL: 'https://kth-dh2642-books.firebaseio.com',
-  projectId: 'kth-dh2642-books',
-  storageBucket: 'kth-dh2642-books.appspot.com',
-  messagingSenderId: '488315825230',
-};
 
 // react-redux-firebase config
 const rrfConfig = {
@@ -101,4 +91,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app'),
 );
-

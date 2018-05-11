@@ -1,16 +1,7 @@
 import axios from 'axios';
+import { googleBooksConfig } from '../config';
 
-const RESULTS_PER_PAGE = 8;
-const ROOT_URL = 'https://www.googleapis.com/books/v1/';
-const API_KEY = 'AIzaSyBw6VF7mra0jufF209HhB-83lJBE4_uibk';
-
-const instance = axios.create({
-  baseURL: ROOT_URL,
-  params: {
-    maxResults: RESULTS_PER_PAGE,
-    key: API_KEY,
-  },
-});
+const instance = axios.create(googleBooksConfig);
 
 // Action names
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
