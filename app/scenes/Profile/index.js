@@ -55,7 +55,11 @@ class Profile extends Component {
                 </div>
         );
       }
-      return (<ErrorMessage />);
+      return (
+        <div className="my-3">
+          <ErrorMessage />
+        </div>
+      );
     }
     return (<LoadingSpinner />); // Auth not loaded
   }
