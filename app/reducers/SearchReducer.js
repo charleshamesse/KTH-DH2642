@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_BOOKS, FETCH_MORE_BOOKS, FULFILLED, PENDING, REJECTED } from '../actions';
+import { EDIT_SEARCH, FETCH_BOOKS, FETCH_MORE_BOOKS, FULFILLED, PENDING, REJECTED } from '../actions';
 
 const initialState = {
   searchString: '',
@@ -12,6 +12,13 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case EDIT_SEARCH:
+      return {
+        ...state,
+        searchString: action.payload.searchString,
+        searchCategory: action.payload.searchCategory,
+      };
+
     case FETCH_BOOKS + PENDING:
       return { ...state, loading: true, error: false };
 

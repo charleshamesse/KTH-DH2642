@@ -5,7 +5,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import _ from 'lodash';
 import { debounce } from 'throttle-debounce';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { fetchBooks, fetchMoreBooks } from '../../actions';
+import { editSearch, fetchBooks, fetchMoreBooks } from '../../actions';
 import BookCard from '../../components/BookCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -17,18 +17,18 @@ class Search extends Component {
     this.search = this.search.bind(this);
     this.hasMore = this.hasMore.bind(this);
     this.fetchMoreBooks = this.fetchMoreBooks.bind(this);
-  }
-
-  componentDidMount() {
-    // this.search = debounce(100, this.search);
+    this.search = debounce(300, this.search);
   }
 
   handleChange(event) {
+    console.log(event.target.value);
     // Handles change on the search parameters
     if (event.target.id === 'search-input') {
-      this.props.searchData.searchString = event.target.value;
+      // this.props.searchData.searchString = event.target.value;
+      this.props.editSearch(event.target.value, this.props.searchData.searchCategory);
     } else {
-      this.props.searchData.searchCategory = event.target.value;
+      // this.props.searchData.searchCategory = event.target.value;
+      this.props.editSearch(this.props.searchData.searchString, event.target.value);
     }
     this.search(this.props.searchData.searchString, this.props.searchData.searchCategory);
   }
@@ -93,12 +93,22 @@ class Search extends Component {
 
   renderResults() {
     // Renders the higher-level component of results
+    console.log(this.props.searchData);
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (
             <div className="container">
               <div className="mt-3 py-3">
-                <h2 className="display-5">Results ({Object.keys(this.props.books).length} / {this.props.totalBooks})</h2>
+                <h2 className="display-5">
+                  Results ({Object.keys(this.props.books).length} / {this.props.totalBooks})
+                  {
+                    // This makes sure we already display the persisted favorites with a spinner
+                    // and update with the correct ones whenever it's ready
+                    this.props.loading
+                      ? <LoadingSpinner inline={true} />
+                      : ''
+                  }
+                </h2>
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
@@ -155,7 +165,7 @@ class Search extends Component {
 
 // Redux and firebase bindings
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchBooks, fetchMoreBooks }, dispatch);
+  return bindActionCreators({ editSearch, fetchBooks, fetchMoreBooks }, dispatch);
 }
 
 const SearchWithFirebase = compose(

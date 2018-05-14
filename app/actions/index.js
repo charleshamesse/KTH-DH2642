@@ -4,6 +4,7 @@ import { googleBooksConfig } from '../config';
 const instance = axios.create(googleBooksConfig);
 
 // Action names
+export const EDIT_SEARCH = 'EDIT_SEARCH';
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const FETCH_BOOKS = 'FETCH_BOOKS';
@@ -40,6 +41,16 @@ export function logout(firebase) {
 }
 
 // Search
+export function editSearch(searchString, searchCategory) {
+  return {
+    type: EDIT_SEARCH,
+    payload: {
+      searchString,
+      searchCategory,
+    },
+  };
+}
+
 export function fetchBooks(queryString, type) {
   const request = instance.get('/volumes', {
     params: {
