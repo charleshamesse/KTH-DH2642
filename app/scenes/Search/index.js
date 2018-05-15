@@ -21,16 +21,16 @@ class Search extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.value);
     // Handles change on the search parameters
     if (event.target.id === 'search-input') {
       // this.props.searchData.searchString = event.target.value;
       this.props.editSearch(event.target.value, this.props.searchData.searchCategory);
+      this.search(event.target.value, this.props.searchData.searchCategory);
     } else {
       // this.props.searchData.searchCategory = event.target.value;
       this.props.editSearch(this.props.searchData.searchString, event.target.value);
+      this.search(this.props.searchData.searchString, event.target.value);
     }
-    this.search(this.props.searchData.searchString, this.props.searchData.searchCategory);
   }
 
   search(queryString, type) {

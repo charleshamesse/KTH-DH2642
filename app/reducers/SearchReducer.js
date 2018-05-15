@@ -15,6 +15,7 @@ export default function (state = initialState, action) {
     case EDIT_SEARCH:
       return {
         ...state,
+        books: [],
         searchString: action.payload.searchString,
         searchCategory: action.payload.searchCategory,
       };
