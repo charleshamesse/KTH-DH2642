@@ -30,7 +30,6 @@ class Login extends Component {
   }
 
   render() {
-    console.log('login props: ', this.props);
     const fromFavorite = this.props.location.search === '?favorite';
     return (
         <section className="jumbotron">

@@ -93,7 +93,6 @@ class Search extends Component {
 
   renderResults() {
     // Renders the higher-level component of results
-    console.log(this.props.searchData);
     if (this.props.searchData.searchString) {
       if (Object.keys(this.props.books).length > 0) {
         return (

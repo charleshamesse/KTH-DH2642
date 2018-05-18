@@ -48,6 +48,7 @@ export default function (state = initialState, action) {
     case FETCH_MORE_BOOKS + FULFILLED: {
       // New books
       const newBooks = _.mapKeys(action.payload.data.items, 'id');
+      const totalBooks = action.payload.data.totalItems;
 
       // Concat all books
       const allBooks = {
@@ -62,6 +63,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         books: allBooks,
+        totalBooks,
         nextIndex,
         error: false,
       };
