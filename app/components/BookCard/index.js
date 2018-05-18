@@ -47,7 +47,7 @@ class BookCard extends Component {
           <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
               <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)} />
           </div>
-          <Link style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
+          <Link className={noLink ? 'noHover' : ''} style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
             <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />
             <div className="card-body">
               <h4>{_.truncate(title)}</h4>
