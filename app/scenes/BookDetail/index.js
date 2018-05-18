@@ -60,7 +60,7 @@ class BookDetail extends Component {
           <div id="book-price">
             <p>Price: {price}</p>
             {isForSale
-              ? <a href={saleInfo.buyLink} className="card-link">Buy book </a>
+              ? <a target="_blank" href={saleInfo.buyLink} className="card-link">Buy book </a>
               : <span>Book not availabe for purchase.</span>}
           </div>
           </div>
