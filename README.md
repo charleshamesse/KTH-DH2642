@@ -3,6 +3,7 @@
 ## Participants
 
 Eysteinn Gunnlaugsson, 920421-4077
+
 Charles Hamesse, 940776-4811
 
 ## Webpage
