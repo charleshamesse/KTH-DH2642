@@ -30,12 +30,15 @@ class Login extends Component {
   }
 
   render() {
+    console.log('login props: ', this.props);
+    const fromFavorite = this.props.location.search === '?favorite';
     return (
         <section className="jumbotron">
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
                         <h2>Sign in</h2>
+                        {fromFavorite ? <p>You must log in add a book to favorites.</p> : ''}
                         Currently, we only support authentication with Google.
                         <div className="text-center mt-3">
                           { this.renderLoginResponse() }
