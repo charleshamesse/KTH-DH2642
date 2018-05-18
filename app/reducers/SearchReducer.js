@@ -49,6 +49,16 @@ export default function (state = initialState, action) {
       // New books
       const newBooks = _.mapKeys(action.payload.data.items, 'id');
       const totalBooks = action.payload.data.totalItems;
+      
+      // Important note:
+      // We update totalBooks since the Google API behaves strangely
+      // API calls return: 
+      // - totalItems, which is the total number of books available with this query (start index not considered)
+      // - items, the data of the books
+      // When changing the start index, the value totalItems changes, but not in a way related to the start index
+      // i.e. it's not simply removing the books already seen
+      // So we keep track of the most recent totalItems value and update the view with it
+
 
       // Concat all books
       const allBooks = {
