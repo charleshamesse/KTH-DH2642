@@ -11,7 +11,7 @@ class Header extends Component {
     const link = this.props.isEmpty ? '/home' : `/profiles/${this.props.auth.uid}`;
     return (
     <header>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-secondary">
+      <nav className="fixed-top navbar navbar-expand-sm navbar-dark bg-secondary">
         <Link to="/home" className="navbar-brand">
           <FontAwesomeIcon size="lg" color="white" icon={book} />&nbsp;
           G. Readmore

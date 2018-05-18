@@ -11,7 +11,6 @@ import { reactReduxFirebase } from 'react-redux-firebase';
 import firebase from 'firebase';
 
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Introduction from './scenes/Introduction';
 import Login from './scenes/Login';
 import Logout from './scenes/Logout';
@@ -57,7 +56,7 @@ export default class App extends React.Component {
         <div>
           <Header />
 
-          <main role="main">
+          <main className='mt-5' role="main">
             {/* This redirect needs to be complex to handle deep linking urls later
                 https://stackoverflow.com/a/43958016/4789016
             */}
@@ -76,8 +75,6 @@ export default class App extends React.Component {
               <Redirect to="/home"/>
             </Switch>
           </main>
-
-          <Footer />
         </div>
       </Router>
     );
