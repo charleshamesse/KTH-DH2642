@@ -61,7 +61,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        totalBooks: action.payload.data.totalItems,
         books: allBooks,
         nextIndex,
         error: false,
