@@ -11,16 +11,18 @@ class Header extends Component {
     const link = this.props.isEmpty ? '/home' : `/profiles/${this.props.auth.uid}`;
     return (
     <header>
-    <nav className="navbar navbar-expand navbar-dark bg-secondary">
-      <div id="wrapper" className="container-fluid">
-        <div id="header-title">
-          <Link to="/home" className="navbar-brand">
-            <FontAwesomeIcon size="lg" color="white" icon={book} />&nbsp;
-            G. Readmore
-          </Link>
-        </div>
-        <div id="navbarNavDropdown">
-          <ul className="navbar-nav">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-secondary">
+        <Link to="/home" className="navbar-brand">
+          <FontAwesomeIcon size="lg" color="white" icon={book} />&nbsp;
+          G. Readmore
+        </Link>
+
+        <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="navbar-collapse collapse w-100" id="navbarCollapse">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/home" className="nav-link">Home</Link>
             </li>
@@ -42,9 +44,8 @@ class Header extends Component {
             </li>
           </ul>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
     );
   }
 }
