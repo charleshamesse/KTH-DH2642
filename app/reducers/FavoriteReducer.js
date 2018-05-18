@@ -9,8 +9,6 @@ const initialState = {
 
 
 export default function (state = initialState, action) {
-  console.log('Favorite. Action received:', action);
-
   switch (action.type) {
     case FETCH_FAVORITES + PENDING:
       return { ...state, loading: true };

@@ -9,8 +9,6 @@ const initialState = {
 
 
 export default function (state = initialState, action) {
-  console.log('Profile. Action received:', action);
-
   switch (action.type) {
     case FETCH_PROFILE + PENDING:
       return { ...state, loadingProfile: true };

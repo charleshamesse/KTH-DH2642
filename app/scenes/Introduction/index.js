@@ -7,15 +7,6 @@ import booksImage from '../../assets/img/books.png';
 
 
 class Introduction extends Component {
-  componentDidMount() {
-    // console.log(this.props);
-    /*
-        this.props.firebase.login({
-            email: 'test@test.com',
-            password: 'test123'
-        })
-        */
-  }
   renderContent() {
     const loggedIn = this.props.profile.displayName !== undefined;
     return (
