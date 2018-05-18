@@ -120,7 +120,13 @@ class Search extends Component {
         );
       }
       return (
-        <strong className="col-md-3 offset-md-4">No results found for that query...</strong>
+        <div className="col-md-3 offset-md-4 text-center">
+          {
+            this.props.loading
+              ? <LoadingSpinner />
+              : <strong>No results found for that query...</strong>
+          }
+        </div>
       );
     }
     return (
