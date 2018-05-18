@@ -65,6 +65,8 @@ class BookDetail extends Component {
           </div>
           </div>
           <div className="col-md-8">
+            <h6>Title</h6>
+            <p>{title}</p>
             <h6>Authors</h6>
             <p>{authors ? authors.join(', ') : 'Unknown'}</p>
             <h6>Description</h6>
