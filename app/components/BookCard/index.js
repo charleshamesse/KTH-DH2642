@@ -22,7 +22,7 @@ class BookCard extends Component {
   }
 
   handleBookFavoriteClick = (isFavorite, book, favBookIds) => {
-    this.props.auth.isEmpty && window.location.replace('/login'); // user not logged in, redirect to login
+    this.props.auth.isEmpty && window.location.replace('/login?favorite'); // user not logged in, redirect to login
 
     isFavorite
       ? this.removeBookFromFavorites(book, favBookIds)
