@@ -37,7 +37,9 @@ class Bookshelf extends Component {
               </h2>
                 {this.props.profile.favorites
                   ? <div>
-                      <p className="text-lead">Have your favorite books organized the way you want.</p>
+                      <p className="text-lead">
+                        Remember that this list is available to the public, so please order your books carefully!
+                      </p>
                       <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
                     </div>
                   : <p>Pick some books as favorites so that you can order them!</p>

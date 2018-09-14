@@ -94,9 +94,7 @@ class BookDetail extends Component {
       );
     }
     return (
-      <div className="w-100 text-center">
-        <LoadingSpinner />
-      </div>
+      <LoadingSpinner />
     );
   }
 

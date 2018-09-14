@@ -3,22 +3,29 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import booksImage from '../../assets/img/books.png';
+import library from '../../assets/img/bright.jpg';
 
 
 class Introduction extends Component {
   renderContent() {
     const loggedIn = this.props.profile.displayName !== undefined;
     return (
-              <div className="col-md-8 text-left">
-              <h1 className="jumbotron-heading">G. Readmore</h1>
-
-              <p className="lead text-muted">{loggedIn ? `Hey ${this.props.profile.displayName}! ` : ''}It is my goal to make your read more. I know of almost any book in the world! Try my search</p>
-              <p>
-                  {!loggedIn ? <a href="/login" className="btn btn-primary my-2 mx-1">Sign In</a> : ''}
-                  <a href="/search" className="btn btn-secondary my-2 mx-1">Discover Books</a>
-              </p>
+      <div>
+        <img src={library} className="bg" id="background-image" alt={'Library picture'}></img>
+        <div id="introtext" className="row">
+          <div className="col-md-12">
+            <h1 id="frontpage-header" className="jumbotron-heading font-weight-light text-white frontpage-text text-center">G. Readmore</h1>
+            <p id="frontpage-text" className="lead font-weight-light text-white frontpage-text text-center">
+              <p>{loggedIn ? `Hey ${this.props.profile.displayName}! ` : ''}</p>
+                It is my goal to make your read more. I know of almost any book in the world! Try my search
+            </p>
+            <p>
+              {!loggedIn ? <a href="/login" className="btn btn-primary my-2 mx-1">Sign In</a> : ''}
+              <a href="/search" className="btn btn-lg btn-secondary my-2 mx-1">Discover Books</a>
+            </p>
           </div>
+        </div>
+      </div>
     );
   }
 
@@ -27,12 +34,7 @@ class Introduction extends Component {
     return (
             <section className="jumbotron text-center">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <img src={booksImage} className="img-fluid" alt={'Books'} />
-                        </div>
-                        {loaded ? this.renderContent() : <LoadingSpinner />}
-                    </div>
+                  {loaded ? this.renderContent() : <LoadingSpinner />}
                 </div>
             </section>
     );

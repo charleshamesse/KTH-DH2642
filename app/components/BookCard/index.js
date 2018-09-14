@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { bindActionCreators, compose } from 'redux';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import * as solidHeart from '@fortawesome/fontawesome-free-solid/faHeart';
-import * as emptyHeart from '@fortawesome/fontawesome-free-regular/faHeart';
 import { updateFavorites } from '../../actions/';
+import './heart.css';
 
 class BookCard extends Component {
   addBookToFavorites = (book, favorites) => {
@@ -44,8 +42,8 @@ class BookCard extends Component {
     return (
       <div className={noLink ? 'col-md-12 mb-3' : 'col-md-3 mb-3'}>
         <div className="card box-shadow">
-          <div className="card-header text-right" data-toggle="tooltip" data-placement="top">
-              <FontAwesomeIcon cursor="pointer" size="lg" color="tomato" icon={isFavorite ? solidHeart : emptyHeart} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)} />
+          <div className="card-header" data-toggle="tooltip" data-placement="top">
+            <div className={`HeartAnimation ${isFavorite ? 'animate' : ''}`} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)}></div>
           </div>
           <Link className={noLink ? 'noHover' : ''} style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
             <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />

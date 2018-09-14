@@ -76,7 +76,7 @@ class Search extends Component {
           dataLength={Object.keys(this.props.books).length}
           next={this.fetchMoreBooks}
           hasMore={this.hasMore()}
-          loader={<div className="col-md-3"><LoadingSpinner/></div>}
+          loader={<div className="loading-spinner-div "><LoadingSpinner/></div>}
           endMessage={<div className="row p-4">{'That\'s all we could find!'}</div>}
           style={{ overflowY: 'hidden' }}
           >
@@ -104,7 +104,7 @@ class Search extends Component {
                     // This makes sure we already display the persisted favorites with a spinner
                     // and update with the correct ones whenever it's ready
                     this.props.loading
-                      ? <LoadingSpinner inline={true} />
+                      ? <div className="loading-spinner-div"><LoadingSpinner inline={true} /></div>
                       : ''
                   }
                 </h2>
@@ -113,7 +113,7 @@ class Search extends Component {
               </div>
               <div className="book-results-container">
                 {
-                  this.props.profile ? this.renderBookCardContainer() : '<LoadingSpinner/>'
+                  this.props.profile ? this.renderBookCardContainer() : '<div className="loading-spinner-div"><LoadingSpinner inline={true} /></div>'
                 }
               </div>
             </div>
@@ -123,7 +123,7 @@ class Search extends Component {
         <div className="col-md-3 offset-md-4 text-center">
           {
             this.props.loading
-              ? <LoadingSpinner />
+              ? <div className="loading-spinner-div"><LoadingSpinner inline={true} /></div>
               : <strong>No results found for that query...</strong>
           }
         </div>
@@ -138,7 +138,7 @@ class Search extends Component {
     // Main render method
     return (
       <div className="container-fluid">
-        <div className="row flex-xl-nowrap">
+        <div className="row">
           <div className="col-sm-4 offset-sm-4 below-nav">
             <h2>Search</h2>
             <form className="form-group row">

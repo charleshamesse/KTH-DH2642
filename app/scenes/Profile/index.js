@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators, compose } from 'redux';
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, isEmpty } from 'react-redux-firebase';
 
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorMessage from '../../components/ErrorMessage';
-import BookshelfCard from '../../components/BookshelfCard';
 import BookshelfContainer from '../../components/BookshelfContainer';
-import { fetchFavorites, fetchProfile } from '../../actions/';
+import { fetchProfile } from '../../actions/';
 
 class Profile extends Component {
   componentDidMount() {
@@ -61,7 +60,9 @@ class Profile extends Component {
         </div>
       );
     }
-    return (<LoadingSpinner />); // Auth not loaded
+    return (
+      <LoadingSpinner />
+    );
   }
 
   render() {
