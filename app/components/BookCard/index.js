@@ -40,7 +40,7 @@ class BookCard extends Component {
     } = this.props;
 
     return (
-      <div className={noLink ? 'col-md-12 mb-3' : 'col-md-3 mb-3'}>
+      <div className={noLink ? 'col-md-12 mb-3' : 'mb-3'}>
         <div className="card box-shadow">
           <div className="card-header" data-toggle="tooltip" data-placement="top">
             <div className={`HeartAnimation ${isFavorite ? 'animate' : ''}`} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)}></div>

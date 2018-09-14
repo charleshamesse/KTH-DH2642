@@ -10,6 +10,9 @@ $font-weight-base: 200;
 // Default bootstrap
 @import "~bootstrap/scss/bootstrap";
 .card-columns {
+  @include media-breakpoint-only(md) {
+    column-count: 1;
+  }
   @include media-breakpoint-only(lg) {
     column-count: 3;
   }

@@ -1,5 +1,9 @@
 # Changes for an improved grade in DH2642
 
+## Nicer frontpage
+
+Added a background image to the intro page. Made the text prettier
+
 ## Heart animation
 
 Added a little animation when books are added to favorites or if a book is rendered that is already favorited
@@ -9,6 +13,9 @@ Added a little animation when books are added to favorites or if a book is rende
 Loading spinner was to close to the header above it. This was the case for multiple spinner locations.
 
 Centered the header and moved it a bit further from the headers.
+
+## Fix mobile search results
+The mobile search results were not responsive enough. Fixed that so you always see just one book per column on mobile
 
 ## Project feedback
 

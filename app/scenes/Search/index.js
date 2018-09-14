@@ -81,7 +81,11 @@ class Search extends Component {
           style={{ overflowY: 'hidden' }}
           >
           <div className="row">
-            {this.renderBookCards()}
+            <div className="container">
+              <div className="card-columns">
+                {this.renderBookCards()}
+              </div>
+            </div>
           </div>
         </InfiniteScroll>
       );
@@ -111,7 +115,7 @@ class Search extends Component {
                 <p className="lead">{'Here\'s a list of the best books matching your query.'}</p>
 
               </div>
-              <div className="book-results-container">
+              <div>
                 {
                   this.props.profile ? this.renderBookCardContainer() : '<div className="loading-spinner-div"><LoadingSpinner inline={true} /></div>'
                 }
