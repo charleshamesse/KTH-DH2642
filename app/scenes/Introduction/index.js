@@ -15,8 +15,8 @@ class Introduction extends Component {
         <div id="introtext" className="row">
           <div className="col-md-12">
             <h1 id="frontpage-header" className="jumbotron-heading font-weight-light text-white frontpage-text text-center">G. Readmore</h1>
-            <p id="frontpage-text" className="lead font-weight-light text-white frontpage-text text-center">
-              <p>{loggedIn ? `Hey ${this.props.profile.displayName}! ` : ''}</p>
+            <p className="frontpage-text lead font-weight-light text-white frontpage-text text-center">{loggedIn ? `Hey ${this.props.profile.displayName}! ` : ''}</p>
+            <p className="frontpage-text lead font-weight-light text-white frontpage-text text-center">
                 It is my goal to make your read more. I know of almost any book in the world! Try my search
             </p>
             <p>
