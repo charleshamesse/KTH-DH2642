@@ -38,12 +38,11 @@ class BookCard extends Component {
     const {
       apiId, book, title, authors, isFavorite, favBookIds, noLink,
     } = this.props;
-
     return (
-      <div className={noLink ? 'col-md-12 mb-3' : 'mb-3'}>
+      <div className={noLink ? 'col-sm-12 mb-3' : 'col-lg-3 mb-3'}>
         <div className="card box-shadow">
           <div className="card-header" data-toggle="tooltip" data-placement="top">
-            <div className={`HeartAnimation ${isFavorite ? 'animate' : ''}`} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)}></div>
+            <div className={`HeartAnimation${isFavorite ? ' animate' : ''}`} onClick={() => this.handleBookFavoriteClick(isFavorite, book, favBookIds)}></div>
           </div>
           <Link className={noLink ? 'noHover' : ''} style={{ color: 'black' }} to={noLink ? '#' : `/books/${apiId}`}>
             <img className={noLink ? 'card-img-top' : 'card-img-top book-card-img'} src={`https://books.google.com/books/content/images/frontcover/${apiId}?fife=w300-h450`} alt="Card image cap" />

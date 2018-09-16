@@ -80,12 +80,8 @@ class Search extends Component {
           endMessage={<div className="row p-4">{'That\'s all we could find!'}</div>}
           style={{ overflowY: 'hidden' }}
           >
-          <div className="row">
-            <div className="container">
-              <div className="card-columns">
-                {this.renderBookCards()}
-              </div>
-            </div>
+          <div className="card-group">
+            {this.renderBookCards()}
           </div>
         </InfiniteScroll>
       );
