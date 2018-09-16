@@ -138,8 +138,8 @@ class Search extends Component {
     // Main render method
     return (
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-4 offset-sm-4 below-nav">
+        <div className="row justify-content-center">
+          <div className="below-nav">
             <h2>Search</h2>
             <form className="form-group row">
               <div className="col-md-6">
