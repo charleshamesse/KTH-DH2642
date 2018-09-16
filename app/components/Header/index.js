@@ -30,7 +30,7 @@ class Header extends Component {
               <Link to="/search" className="nav-link">Search</Link>
             </li>
             <li className="nav-item">
-              <Link to="/bookshelf" className="nav-link">Bookshelf</Link>
+              <Link to="/bookshelf" className="nav-link">Reading List</Link>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

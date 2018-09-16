@@ -26,7 +26,7 @@ class Bookshelf extends Component {
           <div className="container">
             <div className="my-3 py-3">
               <h2 className="display-5">
-                Bookshelf
+                Reading List
                 {
                   // This makes sure we already display the persisted favorites with a spinner
                   // and update with the correct ones whenever it's ready
@@ -38,7 +38,7 @@ class Bookshelf extends Component {
                 {this.props.profile.favorites
                   ? <div>
                       <p className="text-lead">
-                        Remember that this list is available to the public, so please order your books carefully!
+                        Keep your reading list sorted. Drag and drop the books to re-order them!
                       </p>
                       <BookshelfContainer bookIds={this.props.profile.favorites} updateFavoritesFunc={this.updateFavorites} editable={true} />
                     </div>
