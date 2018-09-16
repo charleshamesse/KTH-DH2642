@@ -14,8 +14,11 @@ Loading spinner was to close to the header above it. This was the case for multi
 
 Centered the header and moved it a bit further from the headers.
 
-## Fix mobile search results
+## Fix mobile responsivenes
+
 The mobile search results were not responsive enough. Fixed that so you always see just one book per column on mobile
+
+Also fixed mobile look on profile and reading list page
 
 ## Project feedback
 
